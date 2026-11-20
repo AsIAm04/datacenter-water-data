@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>County water use baseline, 1985 to 2015</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Public+Sans:wght@400;500;600&display=swap">
+<style>body{margin:0;background:#fff}</style></head><body>
+<div class="wq" id="wq-root">
+<style>
+.wq{--navy:#112F55;--terra:#B24F24;--terra-d:#C05B2E;--cream:#FAF7F2;--label:#6E6659;--ink:#1A1A1A;--line:#E5DFD4;--nodata:#D8D3C8;
+font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:#fff;max-width:1040px;margin:0 auto;padding:16px;box-sizing:border-box;line-height:1.45}
+.wq *{box-sizing:border-box}
+.wq .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--terra);font-weight:600}
+.wq h2{font-family:Lora,Georgia,"Times New Roman",serif;font-weight:600;color:var(--navy);font-size:26px;line-height:1.2;margin:4px 0 6px}
+.wq .take{font-size:15px;margin:0 0 10px;min-height:44px}
+.wq .scope{background:var(--cream);border:1px solid var(--line);border-left:4px solid var(--terra-d);border-radius:6px;padding:8px 12px;font-size:13px;margin:0 0 12px}
+.wq .ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:8px}
+.wq .ctl label,.wq .ctl .lab{display:block;font-size:11px;color:var(--label);font-weight:600;letter-spacing:.03em;text-transform:uppercase;margin-bottom:3px}
+.wq select,.wq input[type=text]{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #bdb6a8;border-radius:6px;background:#fff;color:var(--ink);min-height:34px;max-width:100%}
+.wq .seg{display:inline-flex;border:1px solid #bdb6a8;border-radius:6px;overflow:hidden;flex-wrap:wrap}
+.wq .seg button{font:inherit;font-size:13px;padding:6px 10px;border:0;border-right:1px solid #bdb6a8;background:#fff;color:var(--navy);cursor:pointer;min-height:34px;font-variant-numeric:tabular-nums}
+.wq .seg button:last-child{border-right:0}
+.wq .seg button[aria-pressed=true]{background:var(--navy);color:#fff}
+.wq .ctl label.chk{text-transform:none;letter-spacing:0;color:var(--ink);font-weight:400;margin:0}
+.wq .chk{display:flex;gap:6px;align-items:center;font-size:13px;min-height:34px;cursor:pointer}
+.wq .chk input{width:16px;height:16px}
+.wq .chk.dis{opacity:.45;cursor:default}
+.wq .mapwrap{position:relative;border:1px solid var(--line);border-radius:8px;background:var(--cream);overflow:hidden}
+.wq svg.map{display:block;width:100%;height:auto}
+.wq .tip{position:absolute;pointer-events:none;background:#fff;border:1px solid #bdb6a8;border-radius:6px;box-shadow:0 4px 14px rgba(17,47,85,.18);padding:8px 10px;font-size:12.5px;min-width:190px;max-width:260px;z-index:5;display:none}
+.wq .tip b{color:var(--navy)}
+.wq .tip .tr{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
+.wq .tip .sub{color:var(--label);font-size:11.5px;margin-top:3px}
+.wq .legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px 4px 2px;font-size:12px}
+.wq .legend .t{font-weight:600;color:var(--label);font-size:11px;text-transform:uppercase;letter-spacing:.03em;margin-right:4px}
+.wq .legend .it{display:flex;align-items:center;gap:5px;font-variant-numeric:tabular-nums}
+.wq .legend .sw{display:inline-block;width:18px;height:12px;border:1px solid rgba(0,0,0,.25);border-radius:2px}
+.wq .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:760px){.wq .grid{grid-template-columns:1fr}.wq h2{font-size:22px}}
+.wq .card{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff;min-width:0}
+.wq .card h3{font-family:Lora,Georgia,serif;font-size:16px;color:var(--navy);margin:0 0 2px;border-bottom:2px solid var(--navy);padding-bottom:4px}
+.wq .card .hint{font-size:12px;color:var(--label);margin:4px 0 8px}
+.wq table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.wq th{background:var(--navy);color:#fff;text-align:left;font-weight:600;padding:5px 7px;font-size:12px}
+.wq td{padding:4px 7px;border-bottom:1px solid var(--line)}
+.wq td.n,.wq th.n{text-align:right}
+.wq tr.row{cursor:pointer}.wq tr.row:hover td{background:var(--cream)}
+.wq .sbar{display:grid;grid-template-columns:150px 1fr 74px;gap:8px;align-items:center;font-size:12.5px;margin:3px 0}
+.wq .sbar .bg{background:#EEF1F6;height:12px;border-radius:2px;position:relative;display:block}
+.wq .sbar .fg{display:block;height:12px;background:var(--navy);border-radius:2px}
+.wq .sbar .v{text-align:right;font-variant-numeric:tabular-nums}
+.wq .charts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+@media(max-width:520px){.wq .charts{grid-template-columns:1fr}.wq .sbar{grid-template-columns:110px 1fr 64px}}
+.wq .charts svg{width:100%;height:auto;display:block}
+.wq .ct{font-size:11px;color:var(--label);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.wq details{margin-top:14px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--cream)}
+.wq summary{cursor:pointer;font-weight:600;color:var(--navy);font-size:14px}
+.wq details p,.wq details li{font-size:13px;margin:6px 0}
+.wq .src{font-size:11.5px;color:var(--label);margin-top:12px}
+.wq .btnlink{font:inherit;font-size:12px;color:var(--terra);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.wq .tick text{fill:#6E6659;font-size:10px}
+</style>
+
+<div class="eyebrow">USGS county water use &middot; 1985 to 2015</div>
+<h2>Where freshwater withdrawals are concentrated, by county</h2>
+<p class="take" id="wq-take" aria-live="polite"></p>
+<div class="scope"><b>What this map is, and is not.</b> It shows freshwater withdrawals reported or estimated by the U.S. Geological Survey for seven sectors, in million gallons per day (Mgal/d). It is <b>not</b> data center water use. This is the county baseline that data center withdrawals will be compared against in the next layer.</div>
+
+<div class="ctl">
+ <div><label for="wq-measure">Measure</label><select id="wq-measure"></select></div>
+ <div><span class="lab" id="wq-mode-l">View</span><div class="seg" role="group" aria-labelledby="wq-mode-l" id="wq-mode"><button data-m="level" aria-pressed="true">One year</button><button data-m="change" aria-pressed="false">Change between years</button></div></div>
+ <div><span class="lab" id="wq-year-l">Year</span><div class="seg" role="group" aria-labelledby="wq-year-l" id="wq-years"></div></div>
+ <div id="wq-fromwrap" style="display:none"><label for="wq-from">Compare to</label><select id="wq-from"></select></div>
+</div>
+<div class="ctl">
+ <label class="chk"><input type="checkbox" id="wq-huc"> Show HUC8 watershed outlines</label>
+ <label class="chk"><input type="checkbox" id="wq-st" checked> State lines</label>
+ <label class="chk" id="wq-thwrap"><input type="checkbox" id="wq-noth"> Exclude thermoelectric power cooling</label>
+ <div style="margin-left:auto;max-width:100%"><label for="wq-find">Find a county</label><input type="text" id="wq-find" list="wq-dl" placeholder="e.g. Loudoun, VA" autocomplete="off"><datalist id="wq-dl"></datalist></div>
+</div>
+
+<div class="mapwrap" id="wq-mapwrap">
+ <svg class="map" id="wq-svg" viewBox="0 0 975 654" role="img" aria-label="Map of U.S. counties shaded by the selected USGS freshwater withdrawal measure"></svg>
+ <div class="tip" id="wq-tip"></div>
+</div>
+<div class="legend" id="wq-legend"></div>
+
+<div class="grid">
+ <div class="card" id="wq-detail"><h3>County detail</h3><p class="hint">Click a county on the map, pick a row from the table, or use Find a county.</p></div>
+ <div class="card"><h3 id="wq-top-h">Top 15 counties</h3><p class="hint" id="wq-top-hint"></p><div style="overflow-x:auto"><table id="wq-top"></table></div></div>
+</div>
+
+<details>
+ <summary>Method notes and limits</summary>
+ <ul>
+  <li><b>Withdrawal, not consumption.</b> USGS reports water withdrawn from ground and surface sources. It does not report how much is returned or evaporated, so withdrawal intensity here is not comparable to consumption figures reported by data center operators.</li>
+  <li><b>Freshwater only.</b> Saline withdrawals are excluded. Values are groundwater plus surface water, fresh.</li>
+  <li><b>Seven sectors, harmonized across years:</b> public supply, domestic self-supplied, irrigation (all irrigation types), thermoelectric power, industrial, mining, and livestock plus aquaculture. Thermoelectric is the sum of fossil, geothermal and nuclear categories in 1985 to 1995 and once-through plus closed-loop in 2000 to 2015. Livestock includes aquaculture from 1990 onward.</li>
+  <li><b>Commercial withdrawals are excluded.</b> USGS reported commercial use only through 1995, so a consistent series does not exist. Data centers would sit partly in commercial and partly in public supply, so this baseline understates the sectors a data center draws on.</li>
+  <li><b>Double counting.</b> Public supply deliveries serve homes, businesses and industry that also appear elsewhere in USGS tables; the seven sectors here are withdrawals at the source, not deliveries, so they add without overlap.</li>
+  <li><b>Thermoelectric dominates many county totals.</b> Once-through power plant cooling can be larger than all other uses in a county combined. Use the checkbox to remove it.</li>
+  <li><b>Trends are approximate at county scale.</b> Estimation methods and sector definitions changed between USGS compilations. National patterns are reliable; single-county jumps between years can reflect method changes or reporting differences.</li>
+  <li><b>Gray means no usable data.</b> Counties missing from a year's compilation, or whose boundaries changed (old Alaska census areas, Yellowstone Park MT), are gray. Virgin Islands are not mapped. Independent Virginia cities merged into counties are summed into the county; Dade, Shannon and Wade Hampton are mapped to their renamed counties.</li>
+  <li><b>Series used.</b> The USGS "Revised" county series, which differs slightly from the original 2015 release. The mapped 2015 national total is 280,436 Mgal/d versus 280,689 in the 2015 release (0.09% lower), mostly from revised irrigation values and unmapped territories.</li>
+  <li><b>2020 and later.</b> USGS changed to annual modeled estimates on HUC12 watersheds after 2015, so a 2020 county value is not directly comparable to this series and is not shown here.</li>
+  <li><b>HUC8 outlines</b> are drawn over counties for reference only. Counties are the unit of measurement; watershed boundaries show where county values sit relative to hydrologic units.</li>
+  <li><b>Class breaks</b> for volume measures are quantiles of nonzero county values pooled across all years, so colors mean the same thing in every year.</li>
+ </ul>
+</details>
+<p class="src">Sources: U.S. Geological Survey, Estimated Use of Water in the United States County-Level Data (1985 to 2015 multi-scale archive, "Revised" county series, DOI 10.5066/P14Q6AVK; 2015 release DOI 10.5066/F7TB15V5). County boundaries: U.S. Census Bureau cartographic boundary file, 2015 (1:500,000). HUC8: USGS Watershed Boundary Dataset (simplified). Alaska, Hawaii and Puerto Rico are shown as insets at different scales.</p>
+
+<script>
+(async function(){
+var GEO,DATA,SHAPES,STATES,HUC;
+var BASE=(document.getElementById('wq-root').getAttribute('data-base')||'data/');
+try{var R=await Promise.all(['geo/geo_meta.json','county_water_1985_2015.json','geo/county_shapes.json','geo/state_lines.json','geo/huc8_outlines.json'].map(function(u){return fetch(BASE+u).then(function(r){if(!r.ok)throw new Error(u+' '+r.status);return r.json()})}));
+GEO=R[0];DATA=R[1];SHAPES=R[2];STATES=R[3];HUC=R[4];}
+catch(e){document.getElementById('wq-take').textContent='Could not load map data ('+e.message+').';return;}
+var YEARS=DATA.years, D=DATA.data, META=DATA.meta;
+var SECT=[['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture']];
+var MEAS=[['total','All seven sectors combined'],['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture'],['gw','Groundwater share of withdrawals (%)']];
+var NAVY=['#EEF1F6','#CBD6E5','#9DB2CE','#6A8BB4','#3B6190','#112F55'];
+var TERRA=['#FBEFE8','#F3D2BF','#E6A98A','#D07A4F','#B24F24','#7A3216'];
+var DIV=['#3B6190','#9DB2CE','#EDEAE3','#E6A98A','#B24F24'];
+var ZERO='#FFFFFF', NODATA='#D8D3C8';
+var S={measure:'total',mode:'level',yi:6,from:3,huc:false,st:true,noth:false,sel:null};
+var $=function(id){return document.getElementById(id)};
+var NS='http://www.w3.org/2000/svg';
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function fmt(v){if(v==null)return 'n/a';var a=Math.abs(v);if(a>=100)return Math.round(v).toLocaleString('en-US');if(a>=10)return v.toFixed(1);if(a>=1)return v.toFixed(1);return v.toFixed(2)}
+function fmtp(v){return v==null?'n/a':Math.round(v)+'%'}
+var ci={};var colIdx={};DATA.cols.forEach(function(c,i){colIdx[c]=i});
+function secTot(arr,k){var g=arr[colIdx[k+'_gw']],s=arr[colIdx[k+'_sw']];if(g==null&&s==null)return null;return (g||0)+(s||0)}
+function calc(f,yi){
+  var arr=D[f]&&D[f][yi];if(!arr)return null;
+  var tot=0,gw=0,any=false,sec={};
+  SECT.forEach(function(p){var k=p[0];var t=secTot(arr,k);sec[k]=t;
+    if(t!=null){any=true;if(!(S.noth&&k==='th')){tot+=t;gw+=(arr[colIdx[k+'_gw']]||0)}}});
+  if(!any)return null;
+  return {sec:sec,total:tot,gw:gw};
+}
+function value(f,yi,m){
+  var c=calc(f,yi);if(!c)return null;
+  if(m==='total')return c.total;
+  if(m==='gw')return c.total>0?100*c.gw/c.total:'none';
+  var v=c.sec[m];return v==null?null:v;
+}
+// breaks: pooled nonzero quantiles per measure (computed with thermo on)
+var BRK={};
+function nice(x){if(x<=0)return 0;var e=Math.pow(10,Math.floor(Math.log10(x)));var m=x/e;var n=m<1.5?1:m<3.5?2:m<7.5?5:10;return n*e}
+function computeBreaks(){
+  var saveNo=S.noth;
+  [false,true].forEach(function(nt){
+    S.noth=nt;
+    MEAS.forEach(function(p){var m=p[0];if(m==='gw')return;
+      if(nt&&m==='th')return;
+      var vals=[];Object.keys(D).forEach(function(f){for(var y=0;y<YEARS.length;y++){var v=value(f,y,m);if(typeof v==='number'&&v>0)vals.push(v)}});
+      vals.sort(function(a,b){return a-b});
+      var q=[.25,.5,.75,.9,.97].map(function(p2){return nice(vals[Math.floor(p2*(vals.length-1))])});
+      for(var i=1;i<q.length;i++)if(q[i]<=q[i-1])q[i]=q[i-1]*2;
+      BRK[(nt?'x':'a')+m]=q;});
+  });
+  S.noth=saveNo;
+}
+function brk(m){return m==='gw'?[20,40,60,80]:BRK[(S.noth?'x':'a')+m]||BRK['a'+m]}
+function classOf(v,b){var i=0;while(i<b.length&&v>b[i])i++;return i}
+function pal(m){return m==='gw'?TERRA:NAVY}
+function colorFor(f){
+  var m=S.measure;
+  if(S.mode==='level'){
+    var v=value(f,S.yi,m);
+    if(v==null)return NODATA;
+    if(v==='none'||v===0)return ZERO;
+    var b=brk(m),P=pal(m);
+    if(m==='gw'){return P[1+Math.min(4,classOf(v,b))]}
+    return P[classOf(v,b)];
+  }
+  var d=changeOf(f);
+  if(d==null)return NODATA;
+  return DIV[d.cls];
+}
+function changeOf(f){
+  var m=S.measure,a=value(f,S.from,m),b=value(f,S.yi,m);
+  if(a==null||b==null||a==='none'||b==='none')return null;
+  if(m==='gw'){var dd=b-a;var c=dd<=-20?0:dd<=-5?1:dd<5?2:dd<20?3:4;return {v:dd,cls:c,pp:true}}
+  if(a<0.5&&b<0.5)return null;
+  if(a<0.5)return {v:null,cls:4,from0:true};
+  var pc=100*(b-a)/a;var c2=pc<=-50?0:pc<=-10?1:pc<10?2:pc<50?3:4;return {v:pc,cls:c2};
+}
+// ---- build svg
+var svg=$('wq-svg');
+svg.setAttribute('viewBox','0 0 '+GEO.width+' '+GEO.height);
+var gC=document.createElementNS(NS,'g');gC.setAttribute('stroke','#fff');gC.setAttribute('stroke-width','0.25');svg.appendChild(gC);
+var paths={};
+SHAPES.forEach(function(s){var p=document.createElementNS(NS,'path');p.setAttribute('d',s.d);p.setAttribute('data-f',s.id);p.setAttribute('fill',NODATA);gC.appendChild(p);paths[s.id]=p});
+var gH=document.createElementNS(NS,'path');gH.setAttribute('d',HUC);gH.setAttribute('fill','none');gH.setAttribute('stroke','#C05B2E');gH.setAttribute('stroke-width','0.55');gH.setAttribute('stroke-opacity','.85');gH.setAttribute('pointer-events','none');gH.style.display='none';svg.appendChild(gH);
+var gS=document.createElementNS(NS,'path');gS.setAttribute('d',STATES);gS.setAttribute('fill','none');gS.setAttribute('stroke','#1A1A1A');gS.setAttribute('stroke-width','0.7');gS.setAttribute('stroke-opacity','.55');gS.setAttribute('pointer-events','none');svg.appendChild(gS);
+var gSel=document.createElementNS(NS,'path');gSel.setAttribute('fill','none');gSel.setAttribute('stroke','#B24F24');gSel.setAttribute('stroke-width','2');gSel.setAttribute('pointer-events','none');svg.appendChild(gSel);
+var gHov=document.createElementNS(NS,'path');gHov.setAttribute('fill','none');gHov.setAttribute('stroke','#1A1A1A');gHov.setAttribute('stroke-width','1.6');gHov.setAttribute('pointer-events','none');svg.appendChild(gHov);
+// inset labels
+[['Alaska',20],['Hawaii',215],['Puerto Rico',345]].forEach(function(l){var t=document.createElementNS(NS,'text');t.setAttribute('x',l[1]);t.setAttribute('y',GEO.ly);t.setAttribute('font-size','10');t.setAttribute('fill','#6E6659');t.textContent=l[0];svg.appendChild(t)});
+var nt=document.createElementNS(NS,'text');nt.setAttribute('x',GEO.width-8);nt.setAttribute('y',GEO.ly);nt.setAttribute('font-size','10');nt.setAttribute('text-anchor','end');nt.setAttribute('fill','#6E6659');nt.textContent='Insets not to scale';svg.appendChild(nt);
+// ---- controls
+var selM=$('wq-measure');MEAS.forEach(function(p){var o=document.createElement('option');o.value=p[0];o.textContent=p[1];selM.appendChild(o)});
+var yb=$('wq-years');YEARS.forEach(function(y,i){var b=document.createElement('button');b.textContent=y;b.setAttribute('data-i',i);b.setAttribute('aria-pressed',i===S.yi?'true':'false');yb.appendChild(b)});
+var fromSel=$('wq-from');
+function fillFrom(){fromSel.innerHTML='';YEARS.forEach(function(y,i){if(i<S.yi){var o=document.createElement('option');o.value=i;o.textContent=y;fromSel.appendChild(o)}});if(S.from>=S.yi)S.from=Math.max(0,S.yi-1);fromSel.value=S.from}
+var dl=$('wq-dl');var findMap={};
+Object.keys(META).sort(function(a,b){return META[a][0]<META[b][0]?-1:1}).forEach(function(f){var label=META[f][0]+', '+META[f][1];var o=document.createElement('option');o.value=label;dl.appendChild(o);findMap[label.toLowerCase()]=f});
+// ---- render
+function legend(){
+  var L=$('wq-legend'),m=S.measure,h='';
+  var unit=m==='gw'?'%':' Mgal/d';
+  if(S.mode==='level'){
+    var b=brk(m),P=pal(m);
+    h+='<span class="t">'+esc(m==='gw'?'Groundwater share':'Mgal/d')+'</span>';
+    h+='<span class="it"><i class="sw" style="background:#fff"></i>None reported</span>';
+    if(m==='gw'){var lab=['0 to 20%','20 to 40%','40 to 60%','60 to 80%','80 to 100%'];for(var i=0;i<5;i++)h+='<span class="it"><i class="sw" style="background:'+P[i+1]+'"></i>'+lab[i]+'</span>'}
+    else{var ranges=['up to '+fmt(b[0])];for(var j=1;j<b.length;j++)ranges.push(fmt(b[j-1])+' to '+fmt(b[j]));ranges.push('over '+fmt(b[b.length-1]));for(var k=0;k<6;k++)h+='<span class="it"><i class="sw" style="background:'+P[k]+'"></i>'+ranges[k]+'</span>'}
+  }else{
+    var lab2=S.measure==='gw'?['down 20+ pts','down 5 to 20','within 5 pts','up 5 to 20','up 20+ pts']:['down 50%+','down 10 to 50%','within 10%','up 10 to 50%','up 50%+'];
+    h+='<span class="t">Change '+YEARS[S.from]+' to '+YEARS[S.yi]+'</span>';
+    for(var q=0;q<5;q++)h+='<span class="it"><i class="sw" style="background:'+DIV[q]+'"></i>'+lab2[q]+'</span>';
+  }
+  h+='<span class="it"><i class="sw" style="background:'+NODATA+'"></i>No usable data</span>';
+  L.innerHTML=h;
+}
+function paint(){
+  Object.keys(paths).forEach(function(f){paths[f].setAttribute('fill',colorFor(f))});
+  legend();
+  gH.style.display=S.huc?'':'none';
+  gS.style.display=S.st?'':'none';
+  $('wq-thwrap').className='chk'+(S.measure==='th'?' dis':'');
+  $('wq-noth').disabled=(S.measure==='th');
+  takeaway();top15();detail();
+}
+function mname(){return MEAS.filter(function(p){return p[0]===S.measure})[0][1]}
+function takeaway(){
+  var m=S.measure,t=$('wq-take');
+  var rows=[],sum=0,n=0,nd=0;
+  Object.keys(D).forEach(function(f){
+    if(S.mode==='level'){var v=value(f,S.yi,m);if(typeof v==='number'){rows.push([f,v]);if(m!=='gw'){sum+=v}}else if(v==null)nd++;}
+    else{var c=changeOf(f);if(c&&c.v!=null)rows.push([f,c.v])}
+  });
+  rows.sort(function(a,b){return b[1]-a[1]});
+  var nm=function(f){return META[f][0]+', '+META[f][1]};
+  var ex=S.noth&&(m==='total'||m==='gw')?' (excluding thermoelectric)':'';
+  if(S.mode==='level'){
+    if(m==='gw'){
+      var hi=0;rows.forEach(function(r){if(r[1]>=80)hi++});
+      t.textContent='In '+YEARS[S.yi]+', '+hi.toLocaleString('en-US')+' of '+rows.length.toLocaleString('en-US')+' counties with reported withdrawals drew at least 80% of their freshwater from groundwater'+ex+'.';
+    }else{
+      t.textContent='In '+YEARS[S.yi]+', USGS counted '+Math.round(sum).toLocaleString('en-US')+' Mgal/d of freshwater withdrawals'+(m==='total'?' across seven sectors':' for '+mname().toLowerCase())+ex+' in the mapped counties. Highest: '+(rows[0]?nm(rows[0][0])+' at '+fmt(rows[0][1])+' Mgal/d':'n/a')+'.';
+    }
+  }else{
+    var up=0,dn=0;rows.forEach(function(r){if(r[1]>=10||(m==='gw'&&r[1]>=5))up++;else if(r[1]<=-10||(m==='gw'&&r[1]<=-5))dn++});
+    t.textContent='From '+YEARS[S.from]+' to '+YEARS[S.yi]+', '+(m==='gw'?'groundwater share':mname().toLowerCase())+ex+' rose in '+up.toLocaleString('en-US')+' counties and fell in '+dn.toLocaleString('en-US')+' (changes beyond '+(m==='gw'?'5 points':'10%')+'). Method changes between compilations can drive single-county swings.';
+  }
+}
+function top15(){
+  var m=S.measure,rows=[];
+  var h=$('wq-top-h'),hint=$('wq-top-hint');
+  Object.keys(D).forEach(function(f){
+    if(S.mode==='level'){var v=value(f,S.yi,m);if(typeof v==='number')rows.push([f,v])}
+    else{var c=changeOf(f);if(c&&c.v!=null){var a=value(f,S.from,m),b=value(f,S.yi,m);rows.push([f,m==='gw'?c.v:(b-a),a,b])}}
+  });
+  rows.sort(function(a,b){return b[1]-a[1]});rows=rows.slice(0,15);
+  var out='';
+  if(S.mode==='level'){
+    h.textContent='Top 15 counties, '+YEARS[S.yi];hint.textContent=(m==='gw'?'Highest groundwater share, with total withdrawals shown for scale.':'Largest withdrawals for the selected measure.');
+    out='<tr><th>County</th><th class="n">'+(m==='gw'?'GW share':'Mgal/d')+'</th>'+(m==='gw'?'<th class="n">Total Mgal/d</th>':'')+'</tr>';
+    rows.forEach(function(r){out+='<tr class="row" data-f="'+r[0]+'"><td>'+esc(META[r[0]][0])+', '+META[r[0]][1]+'</td><td class="n">'+(m==='gw'?fmtp(r[1]):fmt(r[1]))+'</td>'+(m==='gw'?'<td class="n">'+fmt(calc(r[0],S.yi).total)+'</td>':'')+'</tr>'});
+  }else{
+    h.textContent='Largest increases, '+YEARS[S.from]+' to '+YEARS[S.yi];hint.textContent=(m==='gw'?'Change in percentage points.':'Change in Mgal/d (absolute), which avoids inflating tiny bases.');
+    out='<tr><th>County</th><th class="n">'+YEARS[S.from]+'</th><th class="n">'+YEARS[S.yi]+'</th><th class="n">Change</th></tr>';
+    rows.forEach(function(r){var a=value(r[0],S.from,m),b=value(r[0],S.yi,m);out+='<tr class="row" data-f="'+r[0]+'"><td>'+esc(META[r[0]][0])+', '+META[r[0]][1]+'</td><td class="n">'+(m==='gw'?fmtp(a):fmt(a))+'</td><td class="n">'+(m==='gw'?fmtp(b):fmt(b))+'</td><td class="n">'+(r[1]>0?'+':'')+(m==='gw'?Math.round(r[1])+' pts':fmt(r[1]))+'</td></tr>'});
+  }
+  $('wq-top').innerHTML=out;
+}
+function lineChart(vals,title,unit,pct){
+  var W=240,H=120,L=36,R=8,T=10,B=22;
+  var pts=vals.map(function(v,i){return v==null?null:[i,v]});
+  var ok=pts.filter(Boolean);
+  if(!ok.length)return '<div><div class="ct">'+title+'</div><p class="hint">No data.</p></div>';
+  var mx=pct?100:Math.max.apply(null,ok.map(function(p){return p[1]}))||1;
+  var X=function(i){return L+(W-L-R)*i/(YEARS.length-1)},Y=function(v){return T+(H-T-B)*(1-v/mx)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(title)+' by year">';
+  [0,.5,1].forEach(function(f){var v=mx*f;s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#E5DFD4"/><text x="'+(L-4)+'" y="'+(Y(v)+3)+'" font-size="9" text-anchor="end" fill="#6E6659">'+(pct?Math.round(v)+'%':fmt(v))+'</text>'});
+  YEARS.forEach(function(y,i){if(i%2===0||i===YEARS.length-1)s+='<text x="'+X(i)+'" y="'+(H-6)+'" font-size="9" text-anchor="middle" fill="#6E6659">'+(String(y).slice(2))+'</text>'});
+  var d='';pts.forEach(function(p,i){if(!p)return;d+=(d&&pts[i-1]?'L':'M')+X(p[0])+','+Y(p[1])});
+  s+='<path d="'+d+'" fill="none" stroke="#112F55" stroke-width="2"/>';
+  pts.forEach(function(p){if(p)s+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="2.6" fill="#112F55" stroke="#fff" stroke-width="1"/>'});
+  // end label
+  var last=ok[ok.length-1];s+='<text x="'+Math.min(X(last[0]),W-R-2)+'" y="'+(Y(last[1])-6)+'" font-size="9.5" text-anchor="end" fill="#1A1A1A">'+(pct?Math.round(last[1])+'%':fmt(last[1]))+'</text>';
+  return '<div><div class="ct">'+title+'</div>'+s+'</svg></div>';
+}
+function detail(){
+  var el=$('wq-detail'),f=S.sel;
+  if(!f){el.innerHTML='<h3>County detail</h3><p class="hint">Click a county on the map, pick a row from the table, or use Find a county.</p>';gSel.setAttribute('d','');return}
+  gSel.setAttribute('d',(SHAPES_BY[f]||''));
+  var c=calc(f,S.yi);
+  var h='<h3>'+esc(META[f][0])+', '+META[f][1]+' <button class="btnlink" id="wq-clr" style="float:right">Clear</button></h3>';
+  h+='<p class="hint">FIPS '+f+' &middot; '+YEARS[S.yi]+'. Sector bars share one scale within this county'+(S.noth?'; thermoelectric still shown here for reference but excluded from totals and shares':'')+'.</p>';
+  if(!c){h+='<p>No usable USGS data for this county in '+YEARS[S.yi]+'.</p>'}
+  else{
+    var mx=Math.max.apply(null,SECT.map(function(p){return c.sec[p[0]]||0}))||1;
+    SECT.forEach(function(p){var v=c.sec[p[0]];h+='<div class="sbar"><span>'+p[1]+'</span><span class="bg"><span class="fg" style="width:'+(100*(v||0)/mx)+'%"></span></span><span class="v">'+(v==null?'n/a':fmt(v))+'</span></div>'});
+    h+='<p class="hint" style="margin-top:8px">Total (shown measure basis): <b>'+fmt(c.total)+' Mgal/d</b>; groundwater share <b>'+(c.total>0?Math.round(100*c.gw/c.total)+'%':'n/a')+'</b>.</p>';
+  }
+  var tv=YEARS.map(function(y,i){var cc=calc(f,i);return cc?cc.total:null});
+  var gv=YEARS.map(function(y,i){var cc=calc(f,i);return cc&&cc.total>0?100*cc.gw/cc.total:null});
+  h+='<div class="charts">'+lineChart(tv,'Total withdrawals, Mgal/d','',false)+lineChart(gv,'Groundwater share','',true)+'</div>';
+  el.innerHTML=h;
+  var cb=$('wq-clr');if(cb)cb.onclick=function(){S.sel=null;detail()};
+}
+var SHAPES_BY={};SHAPES.forEach(function(s){SHAPES_BY[s.id]=s.d});
+// ---- events
+var tip=$('wq-tip'),wrap=$('wq-mapwrap');
+svg.addEventListener('mousemove',function(e){
+  var f=e.target.getAttribute&&e.target.getAttribute('data-f');
+  if(!f){tip.style.display='none';gHov.setAttribute('d','');return}
+  gHov.setAttribute('d',SHAPES_BY[f]);
+  var m=S.measure,c=calc(f,S.yi),h='<b>'+esc(META[f][0])+', '+META[f][1]+'</b>';
+  if(S.mode==='level'){
+    if(!c)h+='<div class="sub">No usable USGS data for '+YEARS[S.yi]+'.</div>';
+    else{
+      var v=value(f,S.yi,m);
+      h+='<div class="tr"><span>'+esc(mname())+'</span><b>'+(m==='gw'?(typeof v==='number'?Math.round(v)+'%':'n/a'):fmt(v)+' Mgal/d')+'</b></div>';
+      if(m!=='gw'&&m!=='total'&&c.total>0)h+='<div class="tr"><span>Share of county total</span><span>'+Math.round(100*c.sec[m]/c.total)+'%</span></div>';
+      h+='<div class="tr"><span>Total withdrawals</span><span>'+fmt(c.total)+' Mgal/d</span></div><div class="tr"><span>Groundwater share</span><span>'+(c.total>0?Math.round(100*c.gw/c.total)+'%':'n/a')+'</span></div><div class="sub">'+YEARS[S.yi]+' &middot; click for trend</div>';
+    }
+  }else{
+    var d=changeOf(f);
+    if(!d)h+='<div class="sub">Not enough data to compare '+YEARS[S.from]+' and '+YEARS[S.yi]+'.</div>';
+    else{var a=value(f,S.from,m),b=value(f,S.yi,m);h+='<div class="tr"><span>'+YEARS[S.from]+'</span><span>'+(m==='gw'?fmtp(a):fmt(a)+' Mgal/d')+'</span></div><div class="tr"><span>'+YEARS[S.yi]+'</span><span>'+(m==='gw'?fmtp(b):fmt(b)+' Mgal/d')+'</span></div><div class="tr"><span>Change</span><b>'+(d.pp?(d.v>0?'+':'')+Math.round(d.v)+' pts':d.from0?'from near zero':(d.v>0?'+':'')+Math.round(d.v)+'%')+'</b></div>';}
+  }
+  tip.innerHTML=h;tip.style.display='block';
+  var r=wrap.getBoundingClientRect();var x=e.clientX-r.left+14,y=e.clientY-r.top+14;
+  var tw=tip.offsetWidth,th=tip.offsetHeight;if(x+tw>r.width-4)x=e.clientX-r.left-tw-14;if(y+th>r.height-4)y=e.clientY-r.top-th-14;
+  tip.style.left=Math.max(4,x)+'px';tip.style.top=Math.max(4,y)+'px';
+});
+svg.addEventListener('mouseleave',function(){tip.style.display='none';gHov.setAttribute('d','')});
+svg.addEventListener('click',function(e){var f=e.target.getAttribute&&e.target.getAttribute('data-f');if(f){S.sel=f;detail()}});
+$('wq-top').addEventListener('click',function(e){var tr=e.target.closest&&e.target.closest('tr.row');if(tr){S.sel=tr.getAttribute('data-f');detail();$('wq-detail').scrollIntoView&&$('wq-detail').scrollIntoView({block:'nearest',behavior:'smooth'})}});
+selM.addEventListener('change',function(){S.measure=selM.value;paint()});
+yb.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;S.yi=+b.getAttribute('data-i');[].forEach.call(yb.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});fillFrom();paint()});
+$('wq-mode').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;S.mode=b.getAttribute('data-m');[].forEach.call($('wq-mode').children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  $('wq-fromwrap').style.display=S.mode==='change'?'':'none';
+  if(S.mode==='change'&&S.yi===0){S.yi=6;[].forEach.call(yb.children,function(x,i){x.setAttribute('aria-pressed',i===6?'true':'false')})}
+  $('wq-year-l').textContent=S.mode==='change'?'Year (end)':'Year';fillFrom();paint()});
+fromSel.addEventListener('change',function(){S.from=+fromSel.value;paint()});
+$('wq-huc').addEventListener('change',function(e){S.huc=e.target.checked;paint()});
+$('wq-st').addEventListener('change',function(e){S.st=e.target.checked;paint()});
+$('wq-noth').addEventListener('change',function(e){S.noth=e.target.checked;paint()});
+$('wq-find').addEventListener('change',function(e){var f=findMap[e.target.value.trim().toLowerCase()];if(f){S.sel=f;detail()}});
+computeBreaks();fillFrom();paint();
+})();
+</script>
+</div>
+
+</body></html>

@@ -1,0 +1,11 @@
+fips,county,state,year
+02010,Aleutian Islands Census Area,AK,[1985]
+02140,Kobuk Census Area,AK,[1985]
+02201,Prince of Wales-Outer Ketchikan Census Area,AK,"[1985, 1990, 1995, 2000, 2005]"
+02231,Skagway-Yakutat-Angoon Census Area,AK,"[1985, 1990]"
+02232,Skagway-Hoonah-Angoon Census Area,AK,"[1995, 2000, 2005]"
+02280,Wrangell-Petersburg Census Area,AK,"[1985, 1990, 1995, 2000, 2005]"
+30113,Yellowstone Natl Park County,MT,"[1985, 1990, 1995]"
+78010,St. Croix County,VI,"[1985, 1990, 1995, 2000, 2005, 2010, 2015]"
+78020,St. John County,VI,"[1985, 1990, 1995, 2000, 2005, 2010, 2015]"
+78030,St. Thomas County,VI,"[1985, 1990, 1995, 2000, 2005, 2010, 2015]"
