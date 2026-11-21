@@ -1,0 +1,27 @@
+site,county_fips,straddles,withdrawal_mgd,consumption_mgd,local_supply_mgd,context_ratio_withdrawal_pct_of_local_modeled_runoff,context_ratio_consumption_pct_of_local_modeled_runoff
+"Ashburn, VA",51107,False,0.2096,0.1458,455.9,0.046,0.032
+"Berkeley County, SC",45015,False,2.7082,2.4704,762.1,0.3554,0.3242
+"Bristow, VA",51153,False,0.9852,0.7332,310.3,0.3175,0.2363
+"Council Bluffs, IA",19155,False,4.7847,3.6877,418.5,1.1434,0.8812
+"The Dalles, OR",41065,False,1.7926,1.2849,1697.0,0.1056,0.0757
+"Douglas County, GA",13097,False,1.2071,1.0058,151.2,0.7984,0.6652
+"Henderson, NV",32003,False,1.1005,0.6559,121.8,0.9037,0.5386
+"Jackson County, AL",01071,False,0.5233,0.4756,1118.7,0.0468,0.0425
+"Lancaster, OH",39045,False,0.8414,0.3721,393.5,0.2138,0.0945
+"Leesburg, VA",51107,False,0.6523,0.5225,455.9,0.1431,0.1146
+"Lenoir, NC",37027,False,1.0364,0.9433,446.0,0.2324,0.2115
+"Lockbourne, OH",39049,False,1.2625,0.9849,365.6,0.3453,0.2694
+"Mayes County, OK",40097,False,3.8266,2.9627,298.4,1.2826,0.993
+"Mesa, AZ",04013,False,0.0532,0.0266,208.8,0.0255,0.0127
+"Midlothian, TX",48139,False,0.7222,0.6033,329.2,0.2193,0.1832
+"Montgomery County, TN",47125,False,1.3685,1.1636,443.5,0.3086,0.2623
+"New Albany, OH",39089|39049,True,2.7619,2.2896,959.0,0.288,0.2387
+"New Haven, IN",18003,False,0.1704,0.1036,417.0,0.0409,0.0248
+"Omaha, NE",31055,False,0.6625,0.5038,109.7,0.6036,0.4591
+"Papillion, NE",31153,False,1.857,1.5019,68.6,2.7073,2.1896
+"Pflugerville, TX",48453,False,0.0011,0.0003,253.6,0.0004,0.0001
+"Phoenix, AZ",04013,False,0.0014,0.0003,208.8,0.0007,0.0001
+"Red Oak, TX",48139,False,0.1836,0.1381,329.2,0.0558,0.0419
+"Sterling, VA",51107,False,0.7079,0.5474,455.9,0.1553,0.1201
+"Storey County, NV",32029,False,0.1827,0.0184,64.8,0.282,0.0283
+"Wilmer, TX",48113,False,0.0071,0.0008,398.7,0.0018,0.0002

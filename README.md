@@ -1,6 +1,6 @@
 # Data center water use: data and county map
 
-Data and page source for the AsIAm county water stress project. The goal is to compare data center water withdrawals against local water supply. This repo currently holds the county baseline of USGS withdrawals (1985 to 2015). It does not contain data center water use yet.
+Data and page source for the AsIAm county map "Data center water disclosure and local supply". It sets USGS county withdrawals (1985 to 2015), company-disclosed site water (Google 2024 and 2025, Microsoft FY2025), a modeled subbasin footprint and data center locations side by side. It is not a water stress index and no layer measures the supply serving a data center. Ratios in the data files are context ratios: site withdrawal over local modeled runoff, not a measure of the supply serving the site (runoff excludes upstream inflow, transfers, groundwater and reservoirs, and county totals miss water bought from another jurisdiction).
 
 ## What is here
 
@@ -38,4 +38,4 @@ data/datacenters/ holds the IM3 Open Source Data Center Atlas (OSM-derived, ODbL
 ## Disclosed-water layer and naming (2026-11-20)
 The page is titled "Data center water disclosure and local supply". It is not a water stress index: stress depends on demand from all users relative to available supply, and nothing here attributes stress to data centers. Layers: USGS county withdrawals (1985-2015), OSM footprint circles, and company-disclosed site water diamonds (Google FY2024, Microsoft FY2025) with the share of modeled local runoff as a labeled, modeled ratio. Rebuild: scripts/prep_datacenters.py, prep_google_water.py, prep_microsoft_water.py, prep_google_share.py, prep_disclosed_map.py, then build_site.py.
 
-Context sources (not used as data): Rosa et al. 2026, Environ. Sci. Technol. 60, 27780-27791 (global data center exposure to modeled water gap at 50 km; results on Zenodo; it states that exposure does not establish operational or community impact); Lincoln Institute of Land Policy, "Data Drain" (Gorey, 2025-10-17).
+Context sources (not used as data): Rosa et al. 2026, Environ. Sci. Technol. 60, 27780-27791 (global data center exposure to a modeled water gap, grid resolution not stated in the public record; results on Zenodo; it states that exposure does not establish operational or community impact); Lincoln Institute of Land Policy, "Data Drain" (Gorey, 2025-10-17).
