@@ -1,0 +1,16 @@
+sector,year,compiled_mgd,modeled_mgd,ratio
+public supply,2000,43245.0,33300.0,0.77
+public supply,2005,44326.0,34605.0,0.78
+public supply,2010,40497.0,34464.0,0.85
+public supply,2015,38717.0,34722.0,0.9
+public supply,2020,,35823.0,
+irrigation,2000,139032.0,99846.0,0.72
+irrigation,2005,127481.0,95756.0,0.75
+irrigation,2010,115532.0,102280.0,0.89
+irrigation,2015,117902.0,105769.0,0.9
+irrigation,2020,,110904.0,
+thermoelectric (fresh),2000,134361.0,,
+thermoelectric (fresh),2005,142944.0,,
+thermoelectric (fresh),2010,118034.0,100591.0,0.85
+thermoelectric (fresh),2015,95145.0,79363.0,0.83
+thermoelectric (fresh),2020,,59889.0,
