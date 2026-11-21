@@ -20,6 +20,22 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 .wq .chk.dis{opacity:.45;cursor:default}
 .wq .mapwrap{position:relative;border:1px solid var(--line);border-radius:8px;background:var(--cream);overflow:hidden}
 .wq svg.map{display:block;width:100%;height:auto}
+.wq .sub2{font-size:15px;color:var(--label);margin:0 0 8px}
+.wq svg.map path,.wq svg.map rect,.wq svg.map circle{vector-effect:non-scaling-stroke}
+.wq svg.map{touch-action:pan-y;cursor:grab}.wq svg.map.zoomed{touch-action:none}.wq svg.map.drag{cursor:grabbing}
+.wq .mctl{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px;z-index:4}
+.wq .mctl button{font:600 18px/1 "Public Sans",system-ui,sans-serif;width:34px;height:34px;padding:0;border:1px solid #bdb6a8;background:#fff;color:var(--navy);border-radius:6px;cursor:pointer;box-shadow:0 1px 3px rgba(17,47,85,.15)}
+.wq .mctl button.rst{font-size:11px;letter-spacing:.02em;width:auto;min-width:34px;padding:0 6px}
+.wq .mctl button:hover:not(:disabled){background:var(--cream);border-color:var(--navy)}
+.wq .mctl button:focus-visible{outline:3px solid var(--terra);outline-offset:1px}
+.wq .mctl button:disabled{color:#a39c8d;background:#fff;border-color:#d9d3c7;cursor:default}
+.wq[data-ctl=b] .mctl{flex-direction:row;top:auto;bottom:10px;right:10px;background:#fff;border:1px solid #bdb6a8;border-radius:999px;padding:3px;gap:2px;box-shadow:0 1px 3px rgba(17,47,85,.15)}
+.wq[data-ctl=b] .mctl button{border:0;box-shadow:none;border-radius:999px;background:transparent}
+.wq[data-ctl=c] .mctl button{border-radius:50%;width:38px;height:38px}
+.wq[data-ctl=c] .mctl button.rst{border-radius:999px;height:38px}
+.wq .north{position:absolute;top:10px;left:10px;width:48px;height:58px;pointer-events:none;z-index:3}
+.wq .north .na,.wq .north .nb,.wq .north .nc{display:none}
+.wq[data-north=a] .north .na,.wq[data-north=b] .north .nb,.wq[data-north=c] .north .nc{display:inline}
 .wq .tip{position:absolute;pointer-events:none;background:#fff;border:1px solid #bdb6a8;border-radius:6px;box-shadow:0 4px 14px rgba(17,47,85,.18);padding:8px 10px;font-size:12.5px;min-width:190px;max-width:260px;z-index:5;display:none}
 .wq .tip b{color:var(--navy)}
 .wq .tip .tr{display:flex;justify-content:space-between;gap:12px;font-variant-numeric:tabular-nums}
@@ -54,8 +70,9 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 .wq .tick text{fill:#6E6659;font-size:10px}
 </style>
 
-<div class="eyebrow">Data center water disclosure and local supply &middot; USGS county baseline 1985 to 2015</div>
-<h2>Where freshwater withdrawals are concentrated, by county</h2>
+<div class="eyebrow">USGS county baseline 1985 to 2015 &middot; company disclosures 2024 and 2025</div>
+<h2>Data center water disclosure and local supply</h2>
+<div class="sub2">Where freshwater withdrawals are concentrated, by county</div>
 <p class="take" id="wq-take" aria-live="polite"></p>
 <div class="scope"><b>What this map is, and is not.</b> It shows freshwater withdrawals reported or estimated by the U.S. Geological Survey for seven sectors, in million gallons per day (Mgal/d). It is <b>not</b> data center water use. Two optional layers sit on top: data center building footprint from OpenStreetMap, and site water use that Google and Microsoft have disclosed. Neither layer is a measure of water stress: stress depends on demand from all users relative to available supply, and this map does not model that.</div>
 
@@ -78,8 +95,15 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 
 <div class="mapwrap" id="wq-mapwrap">
  <svg class="map" id="wq-svg" viewBox="0 0 975 654" role="img" aria-label="Map of U.S. counties shaded by the selected USGS freshwater withdrawal measure"></svg>
+ <div class="mctl" id="wq-mctl" role="group" aria-label="Map zoom controls"><button type="button" id="wq-zin" aria-label="Zoom in">+</button><button type="button" id="wq-zout" aria-label="Zoom out">&minus;</button><button type="button" class="rst" id="wq-zrst" aria-label="Reset map view">Reset</button></div>
+ <svg class="north" id="wq-north" viewBox="0 0 48 58" role="img" aria-label="North arrow"><g id="wq-na" transform="rotate(0 24 36)">
+  <g class="na"><path d="M24 14L32 52L24 44Z" fill="#112F55"/><path d="M24 14L16 52L24 44Z" fill="#fff" stroke="#112F55" stroke-width="1.4" stroke-linejoin="round"/><text x="24" y="10" text-anchor="middle" font-family="Public Sans,system-ui,sans-serif" font-size="12" font-weight="700" fill="#112F55">N</text></g>
+  <g class="nb"><circle cx="24" cy="36" r="17" fill="#fff" fill-opacity=".9" stroke="#112F55" stroke-width="1.4"/><path d="M24 22L30 46L24 41L18 46Z" fill="#B24F24"/><text x="24" y="12" text-anchor="middle" font-family="Public Sans,system-ui,sans-serif" font-size="12" font-weight="700" fill="#112F55">N</text></g>
+  <g class="nc"><path d="M24 16L24 54M24 16L17 27M24 16L31 27" fill="none" stroke="#112F55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="24" y="10" text-anchor="middle" font-family="Public Sans,system-ui,sans-serif" font-size="12" font-weight="700" fill="#112F55">N</text></g>
+ </g></svg>
  <div class="tip" id="wq-tip"></div>
 </div>
+<p class="hint" id="wq-zhint" style="margin:6px 4px 0">Zoom with the + and &minus; buttons, or Ctrl or Cmd plus scroll. Drag to pan. Choosing a county zooms to it. The north arrow shows true north at the selected county, or at the center of the view; on this map it tilts up to about 20 degrees from straight up, and the Alaska, Hawaii and Puerto Rico insets are not rotated.</p>
 <div class="legend" id="wq-legend"></div>
 <p class="hint" id="wq-hmnote" style="display:none;margin:6px 4px 0"></p>
 <details id="wq-hmtab" style="display:none;margin:8px 4px 0"><summary>Table of subbasins with a square on the map (25 Mgal/yr or more)</summary><div style="overflow-x:auto"><table id="wq-hmt"></table></div></details>
@@ -123,6 +147,7 @@ var DW=__DW__;
 var AQL=__AQL__;
 var AQD=__AQD__;
 var HM=__HM__;
+var NORTH=__NORTH__;
 var YEARS=DATA.years, D=DATA.data, META=DATA.meta;
 var SECT=[['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture']];
 var MEAS=[['total','All seven sectors combined'],['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture'],['gw','Groundwater share of withdrawals (%)']];
@@ -207,9 +232,10 @@ var gS=document.createElementNS(NS,'path');gS.setAttribute('d',STATES);gS.setAtt
 var gSel=document.createElementNS(NS,'path');gSel.setAttribute('fill','none');gSel.setAttribute('stroke','#B24F24');gSel.setAttribute('stroke-width','2');gSel.setAttribute('pointer-events','none');svg.appendChild(gSel);
 var gHov=document.createElementNS(NS,'path');gHov.setAttribute('fill','none');gHov.setAttribute('stroke','#1A1A1A');gHov.setAttribute('stroke-width','1.6');gHov.setAttribute('pointer-events','none');svg.appendChild(gHov);
 // data center symbols (OpenStreetMap footprint; location and size only, not water)
+var MK=[];
 var gD=document.createElementNS(NS,'g');gD.setAttribute('pointer-events','none');gD.style.display='none';svg.appendChild(gD);
 (function(){var ks=Object.keys(DC).sort(function(a,b){return (DC[b][3]||0)-(DC[a][3]||0)});
-ks.forEach(function(f){var d=DC[f],c=document.createElementNS(NS,'circle');c.setAttribute('cx',d[5]);c.setAttribute('cy',d[6]);
+ks.forEach(function(f){var d=DC[f],c=document.createElementNS(NS,'circle');MK.push([c,d[5],d[6]]);
  if(d[3]){c.setAttribute('r',(1.6+Math.sqrt(d[3]/33.4e6)*13).toFixed(1));c.setAttribute('fill','#B24F24');c.setAttribute('fill-opacity','.55');c.setAttribute('stroke','#7A3216');c.setAttribute('stroke-width','.6')}
  else{c.setAttribute('r','2.2');c.setAttribute('fill','none');c.setAttribute('stroke','#112F55');c.setAttribute('stroke-width','.9')}
  gD.appendChild(c)})})();
@@ -223,7 +249,7 @@ var HK=Object.keys(HM.h).filter(function(k){return HM.h[k][1]>=25}).sort(functio
 function hsz(w){return Math.max(4,Math.sqrt(w)*.17)}
 function hmText(k){var v=HM.h[k];return 'Subbasin '+v[0]+' (HUC8 '+k+'): modeled data center water footprint, year 2018, '+fmtw(v[1])+' million gallons per year (range across six attribution methods '+fmtw(v[2])+' to '+fmtw(v[3])+'). Modeled consumption, not a stress measure.'}
 function hmTip(k){var v=HM.h[k];return '<b>'+esc(v[0])+' (HUC8 '+k+')</b><div class="sub">Modeled data center water footprint, year 2018</div><div class="tr"><span>Consumptive footprint</span><b>'+fmtw(v[1])+' Mgal/yr</b></div><div class="tr"><span>Range, six attribution methods</span><span>'+fmtw(v[2])+' to '+fmtw(v[3])+'</span></div><div class="sub">Cooling water is assigned to the supplying utility withdrawal watershed and electricity water to the power plant watershed. Hydropower reservoir evaporation drives the largest values. Modeled for 2018; not company-reported, not a withdrawal, never added to other layers.</div>'}
-HK.forEach(function(k){var v=HM.h[k],s=hsz(v[1]),r=document.createElementNS(NS,'rect');r.setAttribute('x',-s/2);r.setAttribute('y',-s/2);r.setAttribute('width',s);r.setAttribute('height',s);r.setAttribute('fill','#FAF7F2');r.setAttribute('fill-opacity','.55');r.setAttribute('stroke','#1A1A1A');r.setAttribute('stroke-width','1.2');r.setAttribute('data-m',k);r.setAttribute('transform','translate('+v[10]+','+v[11]+')');if(v[1]>=500){r.setAttribute('tabindex','0');r.setAttribute('role','img');r.setAttribute('aria-label',hmText(k))}r.style.cursor='pointer';gM.appendChild(r)});
+HK.forEach(function(k){var v=HM.h[k],s=hsz(v[1]),r=document.createElementNS(NS,'rect');r.setAttribute('x',-s/2);r.setAttribute('y',-s/2);r.setAttribute('width',s);r.setAttribute('height',s);r.setAttribute('fill','#FAF7F2');r.setAttribute('fill-opacity','.55');r.setAttribute('stroke','#1A1A1A');r.setAttribute('stroke-width','1.2');r.setAttribute('data-m',k);MK.push([r,v[10],v[11]]);if(v[1]>=500){r.setAttribute('tabindex','0');r.setAttribute('role','img');r.setAttribute('aria-label',hmText(k))}r.style.cursor='pointer';gM.appendChild(r)});
 function hmTable(){var t=$('wq-hmt'),h='<tr><th>Subbasin</th><th>HUC8</th><th>Footprint 2018, Mgal/yr</th><th>Range, six methods</th></tr>';HK.forEach(function(k){var v=HM.h[k];h+='<tr><td>'+esc(v[0])+'</td><td>'+k+'</td><td>'+fmtw(v[1])+'</td><td>'+fmtw(v[2])+' to '+fmtw(v[3])+'</td></tr>'});t.innerHTML=h}
 hmTable();
 var gW=document.createElementNS(NS,'g');gW.style.display='none';svg.appendChild(gW);var dwEls=[];
@@ -235,7 +261,7 @@ DW.map(function(e,i){return [e,i]}).sort(function(a,b){return b[0][6]-a[0][6]}).
  g.appendChild(d);
  if(e[0]!=='Google'){var c=document.createElementNS(NS,'circle');c.setAttribute('r','1.3');c.setAttribute('fill','#112F55');c.setAttribute('data-w',i);g.appendChild(c)}
  if(e[10]){var q=document.createElementNS(NS,'path');q.setAttribute('d','M0,'+(-r-3)+'L'+(r+3)+',0L0,'+(r+3)+'L'+(-r-3)+',0Z');q.setAttribute('fill','none');q.setAttribute('stroke','#112F55');q.setAttribute('stroke-dasharray','2 2');q.setAttribute('stroke-width','.9');q.setAttribute('data-w',i);g.appendChild(q)}
- g.setAttribute('transform','translate('+e[4]+','+e[5]+')');gW.appendChild(g);dwEls[i]=g});
+ MK.push([g,e[4],e[5]]);gW.appendChild(g);dwEls[i]=g});
 function dwText(e){return e[0]+' '+e[1]+(e[10]?' (shared site, volume not split between counties)':'')+': '+e[2].join(', ')+'. Withdrawal '+fmtw(e[6])+' million gallons per year'+(e[7]!=null?', consumption '+fmtw(e[7]):', consumption not published by site')+'. Disclosed withdrawal as share of modeled local runoff: '+fmtpc(e[8])+'. Modeled, not a stress measure.'}
 function dwTip(e){var h='<b>'+esc(e[0])+' &middot; '+e[1]+'</b><div class="sub">'+esc(e[2].join(', '))+(e[10]?' &middot; shared site, volume not split':'')+'</div>';
  h+='<div class="tr"><span>Withdrawal</span><b>'+fmtw(e[6])+' Mgal/yr</b></div><div class="tr"><span>Consumption</span><span>'+(e[7]!=null?fmtw(e[7])+' Mgal/yr':'not published by site')+'</span></div>';
@@ -245,8 +271,8 @@ function dwTable(){var t=$('wq-dwt'),h='<tr><th>Operator</th><th>Year</th><th>Si
  DW.slice().sort(function(a,b){return b[6]-a[6]}).forEach(function(e){h+='<tr><td>'+e[0]+'</td><td>'+e[1]+'</td><td>'+esc(e[2].join(', '))+(e[10]?' (shared; not split)':'')+'</td><td>'+e[3].join(', ')+'</td><td>'+fmtw(e[6])+'</td><td>'+(e[7]!=null?fmtw(e[7]):'not published')+'</td><td>'+fmtpc(e[8])+'</td></tr>'});t.innerHTML=h}
 dwTable();
 // inset labels
-[['Alaska',20],['Hawaii',215],['Puerto Rico',345]].forEach(function(l){var t=document.createElementNS(NS,'text');t.setAttribute('x',l[1]);t.setAttribute('y',GEO.ly);t.setAttribute('font-size','10');t.setAttribute('fill','#6E6659');t.textContent=l[0];svg.appendChild(t)});
-var nt=document.createElementNS(NS,'text');nt.setAttribute('x',GEO.width-8);nt.setAttribute('y',GEO.ly);nt.setAttribute('font-size','10');nt.setAttribute('text-anchor','end');nt.setAttribute('fill','#6E6659');nt.textContent='Insets not to scale';svg.appendChild(nt);
+[['Alaska',20],['Hawaii',215],['Puerto Rico',345]].forEach(function(l){var t=document.createElementNS(NS,'text');t.setAttribute('x',l[1]);t.setAttribute('y',GEO.ly);t.setAttribute('font-size','10');t.setAttribute('fill','#6E6659');t.setAttribute('class','insl');t.textContent=l[0];svg.appendChild(t)});
+var nt=document.createElementNS(NS,'text');nt.setAttribute('x',GEO.width-8);nt.setAttribute('y',GEO.ly);nt.setAttribute('font-size','10');nt.setAttribute('text-anchor','end');nt.setAttribute('fill','#6E6659');nt.setAttribute('class','insl');nt.textContent='Insets not to scale';svg.appendChild(nt);
 // ---- controls
 var selM=$('wq-measure');MEAS.forEach(function(p){var o=document.createElement('option');o.value=p[0];o.textContent=p[1];selM.appendChild(o)});
 var yb=$('wq-years');YEARS.forEach(function(y,i){var b=document.createElement('button');b.textContent=y;b.setAttribute('data-i',i);b.setAttribute('aria-pressed',i===S.yi?'true':'false');yb.appendChild(b)});
@@ -357,8 +383,9 @@ function lineChart(vals,title,unit,pct){
 }
 function detail(){
   var el=$('wq-detail'),f=S.sel;
-  if(!f){el.innerHTML='<h3>County detail</h3><p class="hint">Click a county on the map, pick a row from the table, or use Find a county.</p>';gSel.setAttribute('d','');return}
+  if(!f){el.innerHTML='<h3>County detail</h3><p class="hint">Click a county on the map, pick a row from the table, or use Find a county.</p>';gSel.setAttribute('d','');if(lastZ){lastZ=null;resetView()}return}
   gSel.setAttribute('d',(SHAPES_BY[f]||''));
+  if(f!==lastZ){lastZ=f;zoomToCounty(f)}else setNorth();
   var c=calc(f,S.yi);
   var h='<h3>'+esc(META[f][0])+', '+META[f][1]+' <button class="btnlink" id="wq-clr" style="float:right">Clear</button></h3>';
   h+='<p class="hint">FIPS '+f+' &middot; '+YEARS[S.yi]+'. Sector bars share one scale within this county'+(S.noth?'; thermoelectric still shown here for reference but excluded from totals and shares':'')+'.</p>';
@@ -391,6 +418,62 @@ $('wq-detail').addEventListener('click',function(e){if(e.target.classList&&e.tar
 var SHAPES_BY={};SHAPES.forEach(function(s){SHAPES_BY[s.id]=s.d});
 // ---- events
 var tip=$('wq-tip'),wrap=$('wq-mapwrap');
+// ---- zoom, pan, north arrow
+var ROOT=$('wq-root');if(!ROOT.getAttribute('data-ctl'))ROOT.setAttribute('data-ctl','a');if(!ROOT.getAttribute('data-north'))ROOT.setAttribute('data-north','a');
+var VW=GEO.width,VH=GEO.height,KMAX=60,V={x:0,y:0,w:VW,h:VH},lastZ=null,anim=null,moved=false;
+var REDUCE=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function kOf(){return VW/V.w}
+function clampV(v){var w=Math.min(VW,Math.max(VW/KMAX,v.w)),h=w*VH/VW;return {w:w,h:h,x:Math.min(VW-w,Math.max(0,v.x)),y:Math.min(VH-h,Math.max(0,v.y))}}
+function applyV(v){V=clampV(v);svg.setAttribute('viewBox',V.x.toFixed(2)+' '+V.y.toFixed(2)+' '+V.w.toFixed(2)+' '+V.h.toFixed(2));
+  var k=kOf(),sc=Math.pow(k,-0.8);
+  MK.forEach(function(m){m[0].setAttribute('transform','translate('+m[1]+','+m[2]+') scale('+sc.toFixed(4)+')')});
+  [].forEach.call(svg.querySelectorAll('.insl'),function(t){t.style.display=k>1.3?'none':''});
+  svg.classList.toggle('zoomed',k>1.01);
+  $('wq-zin').disabled=k>=KMAX-0.01;$('wq-zout').disabled=k<=1.01;$('wq-zrst').disabled=k<=1.01&&!S.sel;
+  setNorth()}
+function setView(v){if(anim)cancelAnimationFrame(anim);var t=clampV(v);
+  if(REDUCE){applyV(t);return}
+  var a={x:V.x,y:V.y,w:V.w},t0=null,D=380;
+  (function step(ts){if(t0===null)t0=ts;var u=Math.min(1,(ts-t0)/D),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+    applyV({x:a.x+(t.x-a.x)*e,y:a.y+(t.y-a.y)*e,w:a.w+(t.w-a.w)*e});
+    if(u<1)anim=requestAnimationFrame(step);else anim=null})(performance.now())}
+function zoomAt(f,cx,cy){var w=V.w/f;if(w<VW/KMAX)w=VW/KMAX;if(w>VW)w=VW;var r=w/V.w;
+  setView({x:cx-(cx-V.x)*r,y:cy-(cy-V.y)*r,w:w})}
+function resetView(){setView({x:0,y:0,w:VW})}
+var BB={};
+function bboxOf(f){if(BB[f])return BB[f];var d=SHAPES_BY[f];if(!d)return null;var n=d.match(/-?\d+\.?\d*/g),x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  for(var i=0;i+1<n.length;i+=2){var x=+n[i],y=+n[i+1];if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+  return BB[f]=[x0,y0,x1,y1]}
+function zoomToCounty(f){var b=bboxOf(f);setNorth();if(!b)return;
+  var bw=Math.max(b[2]-b[0],1),bh=Math.max(b[3]-b[1],1),w=Math.max(bw*3.2,bh*3.2*VW/VH,70);
+  var cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;setView({x:cx-w/2,y:cy-w*VH/VW/2,w:w})}
+function fmtAng(a){var r=Math.round(Math.abs(a));return r===0?'straight up':r+' degrees '+(a<0?'left':'right')+' of straight up'}
+function setNorth(){var a=0,where='the center of the lower 48';
+  if(S.sel&&NORTH[S.sel]!=null){a=NORTH[S.sel];where='the selected county'}
+  else if(kOf()>1.01){var r=svg.getBoundingClientRect(),el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2),f=el&&el.getAttribute&&el.getAttribute('data-f');
+    if(f&&NORTH[f]!=null){a=NORTH[f];where='the center of the view'}}
+  $('wq-na').setAttribute('transform','rotate('+a+' 24 36)');
+  $('wq-north').setAttribute('aria-label','North arrow. True north at '+where+' points '+fmtAng(a)+'.')}
+$('wq-zin').addEventListener('click',function(){zoomAt(1.8,V.x+V.w/2,V.y+V.h/2)});
+$('wq-zout').addEventListener('click',function(){zoomAt(1/1.8,V.x+V.w/2,V.y+V.h/2)});
+$('wq-zrst').addEventListener('click',function(){resetView()});
+function clientToSvg(e){var r=svg.getBoundingClientRect();return [V.x+(e.clientX-r.left)/r.width*V.w,V.y+(e.clientY-r.top)/r.height*V.h]}
+svg.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();var p=clientToSvg(e);zoomAt(e.deltaY<0?1.25:1/1.25,p[0],p[1])},{passive:false});
+var drag=null;
+svg.addEventListener('pointerdown',function(e){if(e.button!==0||kOf()<=1.01)return;drag={x:e.clientX,y:e.clientY,vx:V.x,vy:V.y,id:e.pointerId};moved=false});
+svg.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+  if(!moved&&Math.abs(dx)+Math.abs(dy)<6)return;
+  if(!moved){moved=true;svg.classList.add('drag');try{svg.setPointerCapture(e.pointerId)}catch(_){}}
+  var r=svg.getBoundingClientRect();if(anim){cancelAnimationFrame(anim);anim=null}
+  applyV({x:drag.vx-dx/r.width*V.w,y:drag.vy-dy/r.height*V.h,w:V.w});tip.style.display='none'});
+function endDrag(e){if(drag&&e.pointerId===drag.id){drag=null;svg.classList.remove('drag');setTimeout(function(){moved=false},0)}}
+svg.addEventListener('pointerup',endDrag);svg.addEventListener('pointercancel',endDrag);
+wrap.setAttribute('tabindex','0');wrap.setAttribute('aria-label','Map. Use plus and minus to zoom and arrow keys to pan.');
+wrap.addEventListener('keydown',function(e){if(e.target!==wrap)return;var k=e.key,st=V.w*0.2;
+  if(k==='+'||k==='=')zoomAt(1.8,V.x+V.w/2,V.y+V.h/2);else if(k==='-'||k==='_')zoomAt(1/1.8,V.x+V.w/2,V.y+V.h/2);
+  else if(k==='0')resetView();else if(k==='ArrowLeft')setView({x:V.x-st,y:V.y,w:V.w});else if(k==='ArrowRight')setView({x:V.x+st,y:V.y,w:V.w});
+  else if(k==='ArrowUp')setView({x:V.x,y:V.y-st,w:V.w});else if(k==='ArrowDown')setView({x:V.x,y:V.y+st,w:V.w});else return;e.preventDefault()});
+applyV(V);
 svg.addEventListener('mousemove',function(e){
   var mi=e.target.getAttribute&&e.target.getAttribute('data-m');
   if(mi){gHov.setAttribute('d','');tip.innerHTML=hmTip(mi);tip.style.display='block';var rm=wrap.getBoundingClientRect();tip.style.left=Math.min(e.clientX-rm.left+14,rm.width-270)+'px';tip.style.top=(e.clientY-rm.top+14)+'px';return}
@@ -420,7 +503,7 @@ svg.addEventListener('mousemove',function(e){
   tip.style.left=Math.max(4,x)+'px';tip.style.top=Math.max(4,y)+'px';
 });
 svg.addEventListener('mouseleave',function(){tip.style.display='none';gHov.setAttribute('d','')});
-svg.addEventListener('click',function(e){var f=e.target.getAttribute&&e.target.getAttribute('data-f');if(f){S.sel=f;detail()}});
+svg.addEventListener('click',function(e){if(moved)return;var f=e.target.getAttribute&&e.target.getAttribute('data-f');if(f){S.sel=f;detail()}});
 $('wq-top').addEventListener('click',function(e){var tr=e.target.closest&&e.target.closest('tr.row');if(tr){S.sel=tr.getAttribute('data-f');detail();$('wq-detail').scrollIntoView&&$('wq-detail').scrollIntoView({block:'nearest',behavior:'smooth'})}});
 selM.addEventListener('change',function(){S.measure=selM.value;paint()});
 yb.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;S.yi=+b.getAttribute('data-i');[].forEach.call(yb.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});fillFrom();paint()});
@@ -436,7 +519,7 @@ $('wq-dc').addEventListener('change',function(e){S.dc=e.target.checked;paint()})
 $('wq-dw').addEventListener('change',function(e){S.dw=e.target.checked;paint()});
 $('wq-st').addEventListener('change',function(e){S.st=e.target.checked;paint()});
 $('wq-noth').addEventListener('change',function(e){S.noth=e.target.checked;paint()});
-$('wq-find').addEventListener('change',function(e){var f=findMap[e.target.value.trim().toLowerCase()];if(f){S.sel=f;detail()}});
+$('wq-find').addEventListener('change',function(e){var f=findMap[e.target.value.trim().toLowerCase()];if(f){if(f!==S.sel){S.sel=f;detail()}else zoomToCounty(f)}});
 computeBreaks();fillFrom();paint();
 })();
 </script>
