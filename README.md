@@ -31,3 +31,6 @@ Aquifer withdrawals (USGS county-by-principal-aquifer, 2015), disclosed data cen
 ## Sources and licenses
 
 USGS data are public domain. Census boundaries are public domain. Siddik et al. 2021, Environmental Research Letters 16, 064017; data DOI 10.7294/14504913 (CC0).
+
+## Data center symbol layer (item 3, first part)
+data/datacenters/ holds the IM3 Open Source Data Center Atlas (OSM-derived, ODbL), county_datacenter_summary.csv and county_datacenter_map.json. Symbols are sized by building footprint only; campus polygons are land parcels and are not summed with buildings. Counties with only a campus or point are hollow markers. Atlas county assignment is kept; five Connecticut planning-region rows are placed by location into 2015 counties. Rebuild with scripts/prep_datacenters.py then scripts/build_site.py. Footprint says nothing about water use.

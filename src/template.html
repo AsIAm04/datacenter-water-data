@@ -67,6 +67,7 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 </div>
 <div class="ctl">
  <label class="chk"><input type="checkbox" id="wq-huc"> Show HUC8 watershed outlines</label>
+ <label class="chk"><input type="checkbox" id="wq-dc"> Show data center buildings (OpenStreetMap footprint)</label>
  <label class="chk"><input type="checkbox" id="wq-st" checked> State lines</label>
  <label class="chk" id="wq-thwrap"><input type="checkbox" id="wq-noth"> Exclude thermoelectric power cooling</label>
  <div style="margin-left:auto;max-width:100%"><label for="wq-find">Find a county</label><input type="text" id="wq-find" list="wq-dl" placeholder="e.g. Loudoun, VA" autocomplete="off"><datalist id="wq-dl"></datalist></div>
@@ -100,7 +101,7 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
   <li><b>Class breaks</b> for volume measures are quantiles of nonzero county values pooled across all years, so colors mean the same thing in every year.</li>
  </ul>
 </details>
-<p class="src">Sources: U.S. Geological Survey, Estimated Use of Water in the United States County-Level Data (1985 to 2015 multi-scale archive, "Revised" county series, DOI 10.5066/P14Q6AVK; 2015 release DOI 10.5066/F7TB15V5). County boundaries: U.S. Census Bureau cartographic boundary file, 2015 (1:500,000). HUC8: USGS Watershed Boundary Dataset (simplified). Alaska, Hawaii and Puerto Rico are shown as insets at different scales.</p>
+<p class="src">Sources: U.S. Geological Survey, Estimated Use of Water in the United States County-Level Data (1985 to 2015 multi-scale archive, "Revised" county series, DOI 10.5066/P14Q6AVK; 2015 release DOI 10.5066/F7TB15V5). County boundaries: U.S. Census Bureau cartographic boundary file, 2015 (1:500,000). HUC8: USGS Watershed Boundary Dataset (simplified). Data center locations: IM3 Open Source Data Center Atlas v2026.11.02 (Mongird et al. 2026, DOI 10.57931/17054299), derived from OpenStreetMap contributors (ODbL); crowd-sourced and incomplete, footprint is polygon area and says nothing about water or power use. Alaska, Hawaii and Puerto Rico are shown as insets at different scales.</p>
 
 <script>
 (function(){
@@ -109,6 +110,7 @@ var DATA=__DATA__;
 var SHAPES=__SHAPES__;
 var STATES=__STATES__;
 var HUC=__HUC__;
+var DC=__DC__;
 var YEARS=DATA.years, D=DATA.data, META=DATA.meta;
 var SECT=[['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture']];
 var MEAS=[['total','All seven sectors combined'],['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture'],['gw','Groundwater share of withdrawals (%)']];
@@ -116,7 +118,7 @@ var NAVY=['#EEF1F6','#CBD6E5','#9DB2CE','#6A8BB4','#3B6190','#112F55'];
 var TERRA=['#FBEFE8','#F3D2BF','#E6A98A','#D07A4F','#B24F24','#7A3216'];
 var DIV=['#3B6190','#9DB2CE','#EDEAE3','#E6A98A','#B24F24'];
 var ZERO='#FFFFFF', NODATA='#D8D3C8';
-var S={measure:'total',mode:'level',yi:6,from:3,huc:false,st:true,noth:false,sel:null};
+var S={measure:'total',mode:'level',yi:6,from:3,huc:false,dc:false,st:true,noth:false,sel:null};
 var $=function(id){return document.getElementById(id)};
 var NS='http://www.w3.org/2000/svg';
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -190,6 +192,13 @@ var gH=document.createElementNS(NS,'path');gH.setAttribute('d',HUC);gH.setAttrib
 var gS=document.createElementNS(NS,'path');gS.setAttribute('d',STATES);gS.setAttribute('fill','none');gS.setAttribute('stroke','#1A1A1A');gS.setAttribute('stroke-width','0.7');gS.setAttribute('stroke-opacity','.55');gS.setAttribute('pointer-events','none');svg.appendChild(gS);
 var gSel=document.createElementNS(NS,'path');gSel.setAttribute('fill','none');gSel.setAttribute('stroke','#B24F24');gSel.setAttribute('stroke-width','2');gSel.setAttribute('pointer-events','none');svg.appendChild(gSel);
 var gHov=document.createElementNS(NS,'path');gHov.setAttribute('fill','none');gHov.setAttribute('stroke','#1A1A1A');gHov.setAttribute('stroke-width','1.6');gHov.setAttribute('pointer-events','none');svg.appendChild(gHov);
+// data center symbols (OpenStreetMap footprint; location and size only, not water)
+var gD=document.createElementNS(NS,'g');gD.setAttribute('pointer-events','none');gD.style.display='none';svg.appendChild(gD);
+(function(){var ks=Object.keys(DC).sort(function(a,b){return (DC[b][3]||0)-(DC[a][3]||0)});
+ks.forEach(function(f){var d=DC[f],c=document.createElementNS(NS,'circle');c.setAttribute('cx',d[5]);c.setAttribute('cy',d[6]);
+ if(d[3]){c.setAttribute('r',(1.6+Math.sqrt(d[3]/33.4e6)*13).toFixed(1));c.setAttribute('fill','#B24F24');c.setAttribute('fill-opacity','.55');c.setAttribute('stroke','#7A3216');c.setAttribute('stroke-width','.6')}
+ else{c.setAttribute('r','2.2');c.setAttribute('fill','none');c.setAttribute('stroke','#112F55');c.setAttribute('stroke-width','.9')}
+ gD.appendChild(c)})})();
 // inset labels
 [['Alaska',20],['Hawaii',215],['Puerto Rico',345]].forEach(function(l){var t=document.createElementNS(NS,'text');t.setAttribute('x',l[1]);t.setAttribute('y',GEO.ly);t.setAttribute('font-size','10');t.setAttribute('fill','#6E6659');t.textContent=l[0];svg.appendChild(t)});
 var nt=document.createElementNS(NS,'text');nt.setAttribute('x',GEO.width-8);nt.setAttribute('y',GEO.ly);nt.setAttribute('font-size','10');nt.setAttribute('text-anchor','end');nt.setAttribute('fill','#6E6659');nt.textContent='Insets not to scale';svg.appendChild(nt);
@@ -216,12 +225,14 @@ function legend(){
     for(var q=0;q<5;q++)h+='<span class="it"><i class="sw" style="background:'+DIV[q]+'"></i>'+lab2[q]+'</span>';
   }
   h+='<span class="it"><i class="sw" style="background:'+NODATA+'"></i>No usable data</span>';
+  if(S.dc)h+='<span class="it"><i class="sw" style="background:#B24F24;opacity:.6;border-radius:50%"></i>Data center building footprint (circle area; largest county 33 million sq ft)</span><span class="it"><i class="sw" style="background:#fff;border:1px solid #112F55;border-radius:50%"></i>Mapped site, no building footprint</span>';
   L.innerHTML=h;
 }
 function paint(){
   Object.keys(paths).forEach(function(f){paths[f].setAttribute('fill',colorFor(f))});
   legend();
   gH.style.display=S.huc?'':'none';
+  gD.style.display=S.dc?'':'none';
   gS.style.display=S.st?'':'none';
   $('wq-thwrap').className='chk'+(S.measure==='th'?' dis':'');
   $('wq-noth').disabled=(S.measure==='th');
@@ -300,6 +311,7 @@ function detail(){
     SECT.forEach(function(p){var v=c.sec[p[0]];h+='<div class="sbar"><span>'+p[1]+'</span><span class="bg"><span class="fg" style="width:'+(100*(v||0)/mx)+'%"></span></span><span class="v">'+(v==null?'n/a':fmt(v))+'</span></div>'});
     h+='<p class="hint" style="margin-top:8px">Total (shown measure basis): <b>'+fmt(c.total)+' Mgal/d</b>; groundwater share <b>'+(c.total>0?Math.round(100*c.gw/c.total)+'%':'n/a')+'</b>.</p>';
   }
+  var dd=DC[f];if(dd){h+='<p class="hint" style="margin-top:8px"><b>Data centers mapped in OpenStreetMap:</b> '+dd[0]+' building'+(dd[0]===1?'':'s')+', '+dd[1]+' campus polygon'+(dd[1]===1?'':'s')+', '+dd[2]+' point'+(dd[2]===1?'':'s')+(dd[3]?'; building footprint '+Math.round(dd[3]).toLocaleString('en-US')+' sq ft':'; no building footprint mapped')+'. Locations and size only. This is not a water measure and the map is incomplete.</p>'}
   var tv=YEARS.map(function(y,i){var cc=calc(f,i);return cc?cc.total:null});
   var gv=YEARS.map(function(y,i){var cc=calc(f,i);return cc&&cc.total>0?100*cc.gw/cc.total:null});
   h+='<div class="charts">'+lineChart(tv,'Total withdrawals, Mgal/d','',false)+lineChart(gv,'Groundwater share','',true)+'</div>';
@@ -327,6 +339,7 @@ svg.addEventListener('mousemove',function(e){
     if(!d)h+='<div class="sub">Not enough data to compare '+YEARS[S.from]+' and '+YEARS[S.yi]+'.</div>';
     else{var a=value(f,S.from,m),b=value(f,S.yi,m);h+='<div class="tr"><span>'+YEARS[S.from]+'</span><span>'+(m==='gw'?fmtp(a):fmt(a)+' Mgal/d')+'</span></div><div class="tr"><span>'+YEARS[S.yi]+'</span><span>'+(m==='gw'?fmtp(b):fmt(b)+' Mgal/d')+'</span></div><div class="tr"><span>Change</span><b>'+(d.pp?(d.v>0?'+':'')+Math.round(d.v)+' pts':d.from0?'from near zero':(d.v>0?'+':'')+Math.round(d.v)+'%')+'</b></div>';}
   }
+  if(S.dc&&DC[f]){var q=DC[f];h+='<div class="tr"><span>Data centers (OSM)</span><span>'+q[0]+' bldg, '+q[1]+' campus, '+q[2]+' pt'+(q[3]?' &middot; '+(q[3]/1e6).toFixed(2)+' M sq ft':'')+'</span></div>'}
   tip.innerHTML=h;tip.style.display='block';
   var r=wrap.getBoundingClientRect();var x=e.clientX-r.left+14,y=e.clientY-r.top+14;
   var tw=tip.offsetWidth,th=tip.offsetHeight;if(x+tw>r.width-4)x=e.clientX-r.left-tw-14;if(y+th>r.height-4)y=e.clientY-r.top-th-14;
@@ -343,6 +356,7 @@ $('wq-mode').addEventListener('click',function(e){var b=e.target.closest('button
   $('wq-year-l').textContent=S.mode==='change'?'Year (end)':'Year';fillFrom();paint()});
 fromSel.addEventListener('change',function(){S.from=+fromSel.value;paint()});
 $('wq-huc').addEventListener('change',function(e){S.huc=e.target.checked;paint()});
+$('wq-dc').addEventListener('change',function(e){S.dc=e.target.checked;paint()});
 $('wq-st').addEventListener('change',function(e){S.st=e.target.checked;paint()});
 $('wq-noth').addEventListener('change',function(e){S.noth=e.target.checked;paint()});
 $('wq-find').addEventListener('change',function(e){var f=findMap[e.target.value.trim().toLowerCase()];if(f){S.sel=f;detail()}});
