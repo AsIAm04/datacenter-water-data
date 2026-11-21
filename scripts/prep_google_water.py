@@ -18,7 +18,7 @@ R=[ # site, withdrawal, discharge, consumption, fips(list), county_basis
 ('Mayes County, OK',1108.3,275.1,833.2,['40097'],'named county'),
 ('Midlothian, TX',221.0,38.7,182.3,['48139'],'place name (Ellis County); not checked in atlas'),
 ('Montgomery County, TN',387.9,66.1,321.8,['47125'],'named county'),
-('New Albany, OH',405.3,52.6,352.7,['39089'],'LOW CONFIDENCE: assigned to Licking County where sources place the campus (1101 Beech Rd SW); atlas polygon also touches Franklin, likely boundary artifact; county auditor parcel check not done. Water is supplied wholesale by Columbus Water & Power from sources in other counties'),
+('New Albany, OH',405.3,52.6,352.7,['39089','39049'],'STRADDLES: campus spans the Licking-Franklin line (Beech Rd SW parcels in Licking; property also at 5266 Babbitt Rd in Franklin, per user). One Google figure for the whole development; volume not split. Supplied wholesale by Columbus Water & Power from sources in other counties'),
 ('Omaha, NE',44.3,12.2,32.1,['31055'],'place name (Douglas County)'),
 ('Papillion, NE',532.3,115.4,416.9,['31153'],'place name (Sarpy County)'),
 ('Pflugerville, TX',0.1,0.1,0.01,['48453'],'place name (Travis County)'),

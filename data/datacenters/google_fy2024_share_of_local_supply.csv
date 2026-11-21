@@ -1,4 +1,4 @@
-site,county_fips,low_confidence_county,withdrawal_mgd,consumption_mgd,local_supply_mgd,withdrawal_pct_of_local_supply,consumption_pct_of_local_supply
+site,county_fips,straddles,withdrawal_mgd,consumption_mgd,local_supply_mgd,withdrawal_pct_of_local_supply,consumption_pct_of_local_supply
 "Ashburn, VA",51107,False,0.1626,0.153,455.9,0.0357,0.0336
 "Berkeley County, SC",45015,False,2.3328,2.1216,762.1,0.3061,0.2784
 "Bristow, VA",51153,False,0.2888,0.2306,310.3,0.0931,0.0743
@@ -14,7 +14,7 @@ site,county_fips,low_confidence_county,withdrawal_mgd,consumption_mgd,local_supp
 "Mayes County, OK",40097,False,3.0281,2.2765,298.4,1.015,0.763
 "Midlothian, TX",48139,False,0.6038,0.4981,329.2,0.1834,0.1513
 "Montgomery County, TN",47125,False,1.0598,0.8792,443.5,0.239,0.1982
-"New Albany, OH",39089,True,1.1074,0.9637,593.4,0.1866,0.1624
+"New Albany, OH",39089|39049,True,1.1074,0.9637,959.0,0.1155,0.1005
 "Omaha, NE",31055,False,0.121,0.0877,109.7,0.1103,0.0799
 "Papillion, NE",31153,False,1.4544,1.1391,68.6,2.1203,1.6606
 "Pflugerville, TX",48453,False,0.0003,0.0,253.6,0.0001,0.0
