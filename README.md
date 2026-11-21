@@ -34,3 +34,8 @@ USGS data are public domain. Census boundaries are public domain. Siddik et al. 
 
 ## Data center symbol layer (item 3, first part)
 data/datacenters/ holds the IM3 Open Source Data Center Atlas (OSM-derived, ODbL), county_datacenter_summary.csv and county_datacenter_map.json. Symbols are sized by building footprint only; campus polygons are land parcels and are not summed with buildings. Counties with only a campus or point are hollow markers. Atlas county assignment is kept; five Connecticut planning-region rows are placed by location into 2015 counties. Rebuild with scripts/prep_datacenters.py then scripts/build_site.py. Footprint says nothing about water use.
+
+## Disclosed-water layer and naming (2026-11-20)
+The page is titled "Data center water disclosure and local supply". It is not a water stress index: stress depends on demand from all users relative to available supply, and nothing here attributes stress to data centers. Layers: USGS county withdrawals (1985-2015), OSM footprint circles, and company-disclosed site water diamonds (Google FY2024, Microsoft FY2025) with the share of modeled local runoff as a labeled, modeled ratio. Rebuild: scripts/prep_datacenters.py, prep_google_water.py, prep_microsoft_water.py, prep_google_share.py, prep_disclosed_map.py, then build_site.py.
+
+Context sources (not used as data): Rosa et al. 2026, Environ. Sci. Technol. 60, 27780-27791 (global data center exposure to modeled water gap at 50 km; results on Zenodo; it states that exposure does not establish operational or community impact); Lincoln Institute of Land Policy, "Data Drain" (Gorey, 2025-10-17).

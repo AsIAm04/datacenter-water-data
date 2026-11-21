@@ -94,3 +94,6 @@ out='/home/claude/datacenter-water-data/data/datacenters/county_datacenter_summa
 s.round(1).to_csv(out,index=False)
 dc={r.fips:[int(r.n_building),int(r.n_campus),int(r.n_point),None if pd.isna(r.footprint_sqft) else round(r.footprint_sqft),r.footprint_basis,r.x,r.y,int(r.n_straddle_rows)] for r in s.itertuples() if pd.notna(r.x)}
 json.dump(dc,open('/home/claude/datacenter-water-data/data/datacenters/county_datacenter_map.json','w'),separators=(',',':'))
+
+json.dump({k:list(v) for k,v in pos.items()},open('/home/claude/datacenter-water-data/data/geo/county_positions.json','w'),separators=(',',':'))
+print('positions',len(pos))
