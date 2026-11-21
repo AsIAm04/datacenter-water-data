@@ -1,0 +1,12 @@
+site,year,withdrawal_ml,withdrawal_mgal,non_potable_pct,county_fips,multi_county,county_basis,operator,water_type,withdrawal_mgd,local_supply_mgd,withdrawal_pct_of_local_supply
+Ashburn (VA),FY2025,239,63.1,,51107,False,metro name; Loudoun County (atlas Microsoft buildings there),Microsoft,"direct, withdrawal only (no consumption published by site)",0.173,455.9,0.0379
+Atlanta (GA),FY2025,19,5.0,,13121|13097,True,METRO: atlas shows Microsoft buildings in Fulton and Douglas; volume not split,Microsoft,"direct, withdrawal only (no consumption published by site)",0.0138,644.8,0.0021
+Boydton (VA),FY2025,362,95.6,,51117,False,Boydton is in Mecklenburg County; atlas has Microsoft there,Microsoft,"direct, withdrawal only (no consumption published by site)",0.262,352.1,0.0744
+Cheyenne (WY),FY2025,188,49.7,,56021,False,Laramie County (atlas),Microsoft,"direct, withdrawal only (no consumption published by site)",0.1361,88.7,0.1534
+Chicago (IL),FY2025,204,53.9,,17031,False,Cook County (atlas); metro may include other counties,Microsoft,"direct, withdrawal only (no consumption published by site)",0.1476,1035.3,0.0143
+Des Moines (IA),FY2025,264,69.7,,19153|19049|19181|19121,True,"METRO: atlas shows Microsoft in Polk, Dallas, Warren, Madison; volume not split",Microsoft,"direct, withdrawal only (no consumption published by site)",0.1911,1132.4,0.0169
+East Wenatchee (WA),FY2025,51,13.5,,53017,False,Douglas County (atlas),Microsoft,"direct, withdrawal only (no consumption published by site)",0.0369,530.6,0.007
+Manassas (VA),FY2025,11,2.9,,51153,False,Prince William County (atlas); Manassas independent cities not separately mapped,Microsoft,"direct, withdrawal only (no consumption published by site)",0.008,310.3,0.0026
+Phoenix (AZ),FY2025,981,259.2,,04013,False,Maricopa County (atlas),Microsoft,"direct, withdrawal only (no consumption published by site)",0.71,208.8,0.3401
+Quincy (WA),FY2025,1292,341.3,74.0,53025,False,Grant County (atlas),Microsoft,"direct, withdrawal only (no consumption published by site)",0.9351,358.6,0.2607
+San Antonio (TX),FY2025,420,111.0,79.0,48029|48325,True,METRO: atlas shows Microsoft in Bexar and Medina; volume not split,Microsoft,"direct, withdrawal only (no consumption published by site)",0.304,528.9,0.0575
