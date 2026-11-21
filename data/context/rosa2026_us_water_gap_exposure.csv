@@ -1,0 +1,9 @@
+country,scenario,months_of_modeled_water_gap_per_year,data_centers,pct_of_us_total,us_total_data_centers
+USA,baseline_2001_2010,0 months,2855.0,78.9,3619
+USA,baseline_2001_2010,1-4 months,260.0,7.2,3619
+USA,baseline_2001_2010,5-8 months,402.0,11.1,3619
+USA,baseline_2001_2010,9-12 months,102.0,2.8,3619
+USA,plus_3C,0 months,2349.6,64.9,3619
+USA,plus_3C,1-4 months,682.4,18.9,3619
+USA,plus_3C,5-8 months,482.6,13.3,3619
+USA,plus_3C,9-12 months,104.4,2.9,3619

@@ -5,13 +5,13 @@ import json, os
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 rd=lambda p: open(os.path.join(ROOT,p)).read()
 t=rd('src/template.html')
-HEAD_MARK="var GEO=__GEO__;\nvar DATA=__DATA__;\nvar SHAPES=__SHAPES__;\nvar STATES=__STATES__;\nvar HUC=__HUC__;\nvar DC=__DC__;\nvar DW=__DW__;"
+HEAD_MARK="var GEO=__GEO__;\nvar DATA=__DATA__;\nvar SHAPES=__SHAPES__;\nvar STATES=__STATES__;\nvar HUC=__HUC__;\nvar DC=__DC__;\nvar DW=__DW__;\nvar AQL=__AQL__;\nvar AQD=__AQD__;"
 assert HEAD_MARK in t
-INLINE=HEAD_MARK.replace('__GEO__',rd('data/geo/geo_meta.json')).replace('__DATA__',rd('data/county_water_1985_2015.json')).replace('__SHAPES__',rd('data/geo/county_shapes.json')).replace('__STATES__',rd('data/geo/state_lines.json')).replace('__HUC__',rd('data/geo/huc8_outlines.json')).replace('__DC__',rd('data/datacenters/county_datacenter_map.json')).replace('__DW__',rd('data/datacenters/disclosed_water_map.json'))
-FETCH="""var GEO,DATA,SHAPES,STATES,HUC,DC,DW;
+INLINE=HEAD_MARK.replace('__GEO__',rd('data/geo/geo_meta.json')).replace('__DATA__',rd('data/county_water_1985_2015.json')).replace('__SHAPES__',rd('data/geo/county_shapes.json')).replace('__STATES__',rd('data/geo/state_lines.json')).replace('__HUC__',rd('data/geo/huc8_outlines.json')).replace('__DC__',rd('data/datacenters/county_datacenter_map.json')).replace('__DW__',rd('data/datacenters/disclosed_water_map.json')).replace('__AQL__',rd('data/geo/aquifer_outlines.json')).replace('__AQD__',rd('data/aquifer_county_map.json'))
+FETCH="""var GEO,DATA,SHAPES,STATES,HUC,DC,DW,AQL,AQD;
 var BASE=(document.getElementById('wq-root').getAttribute('data-base')||'data/');
-try{var R=await Promise.all(['geo/geo_meta.json','county_water_1985_2015.json','geo/county_shapes.json','geo/state_lines.json','geo/huc8_outlines.json','datacenters/county_datacenter_map.json','datacenters/disclosed_water_map.json'].map(function(u){return fetch(BASE+u).then(function(r){if(!r.ok)throw new Error(u+' '+r.status);return r.json()})}));
-GEO=R[0];DATA=R[1];SHAPES=R[2];STATES=R[3];HUC=R[4];DC=R[5];DW=R[6];}
+try{var R=await Promise.all(['geo/geo_meta.json','county_water_1985_2015.json','geo/county_shapes.json','geo/state_lines.json','geo/huc8_outlines.json','datacenters/county_datacenter_map.json','datacenters/disclosed_water_map.json','geo/aquifer_outlines.json','aquifer_county_map.json'].map(function(u){return fetch(BASE+u).then(function(r){if(!r.ok)throw new Error(u+' '+r.status);return r.json()})}));
+GEO=R[0];DATA=R[1];SHAPES=R[2];STATES=R[3];HUC=R[4];DC=R[5];DW=R[6];AQL=R[7];AQD=R[8];}
 catch(e){document.getElementById('wq-take').textContent='Could not load map data ('+e.message+').';return;}"""
 def page(body,fetchmode,base=None):
     b=body.replace(HEAD_MARK,FETCH if fetchmode else INLINE)

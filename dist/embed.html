@@ -67,6 +67,7 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 </div>
 <div class="ctl">
  <label class="chk"><input type="checkbox" id="wq-huc"> Show HUC8 watershed outlines</label>
+ <label class="chk"><input type="checkbox" id="wq-aq"> Show principal aquifer outlines (USGS, 1:5,000,000)</label>
  <label class="chk"><input type="checkbox" id="wq-dc"> Show data center buildings (OpenStreetMap footprint)</label>
  <label class="chk"><input type="checkbox" id="wq-dw"> Show company-disclosed site water (Google FY2024, Microsoft FY2025)</label>
  <label class="chk"><input type="checkbox" id="wq-st" checked> State lines</label>
@@ -84,6 +85,7 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 
 <div class="grid">
  <div class="card" id="wq-detail"><h3>County detail</h3><p class="hint">Click a county on the map, pick a row from the table, or use Find a county.</p></div>
+ <div class="card" id="wq-ctx"><h3>National context, not county data</h3><p class="hint">Rosa et al. (2026) count U.S. data centers by months per year in which a global model shows water demand exceeding supply, at about 50 km resolution. This is exposure, not a measured effect on any water user, and the data release has no locations, so it cannot be mapped by county.</p><div style="overflow-x:auto"><table><tr><th></th><th>0 months</th><th>1 to 4</th><th>5 to 8</th><th>9 to 12</th></tr><tr><td>Baseline 2001-2010</td><td>2,855 (79%)</td><td>260 (7%)</td><td>402 (11%)</td><td>102 (3%)</td></tr><tr><td>+3&deg;C warming scenario</td><td>2,350 (65%)</td><td>682 (19%)</td><td>483 (13%)</td><td>104 (3%)</td></tr></table></div><p class="hint">Out of 3,619 U.S. data centers in the authors' compilation. Their count differs from the OpenStreetMap atlas used for the footprint layer.</p></div>
  <div class="card"><h3 id="wq-top-h">Top 15 counties</h3><p class="hint" id="wq-top-hint"></p><div style="overflow-x:auto"><table id="wq-top"></table></div></div>
 </div>
 
@@ -104,14 +106,14 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
   <li><b>Class breaks</b> for volume measures are quantiles of nonzero county values pooled across all years, so colors mean the same thing in every year.</li>
  </ul>
 </details>
-<p class="src">Sources: U.S. Geological Survey, Estimated Use of Water in the United States County-Level Data (1985 to 2015 multi-scale archive, "Revised" county series, DOI 10.5066/P14Q6AVK; 2015 release DOI 10.5066/F7TB15V5). County boundaries: U.S. Census Bureau cartographic boundary file, 2015 (1:500,000). HUC8: USGS Watershed Boundary Dataset (simplified). Data center locations: IM3 Open Source Data Center Atlas v2026.11.02 (Mongird et al. 2026, DOI 10.57931/17054299), derived from OpenStreetMap contributors (ODbL); crowd-sourced and incomplete, footprint is polygon area and says nothing about water or power use. Alaska, Hawaii and Puerto Rico are shown as insets at different scales.</p>
+<p class="src">Sources: U.S. Geological Survey, Estimated Use of Water in the United States County-Level Data (1985 to 2015 multi-scale archive, "Revised" county series, DOI 10.5066/P14Q6AVK; 2015 release DOI 10.5066/F7TB15V5). County boundaries: U.S. Census Bureau cartographic boundary file, 2015 (1:500,000). HUC8: USGS Watershed Boundary Dataset (simplified). Aquifers: USGS Principal Aquifers of the 48 Conterminous United States, Hawaii and Puerto Rico (2003, DOI 10.5066/P9Y2HOUJ) and Lovelace et al. 2020, groundwater withdrawals from principal aquifers by county, 2015 (DOI 10.5066/P9EI0KMR). Water-gap context: Rosa et al. 2026, Environ. Sci. Technol. 60, 27780-27791 (CC BY 4.0). Data center locations: IM3 Open Source Data Center Atlas v2026.11.02 (Mongird et al. 2026, DOI 10.57931/17054299), derived from OpenStreetMap contributors (ODbL); crowd-sourced and incomplete, footprint is polygon area and says nothing about water or power use. Alaska, Hawaii and Puerto Rico are shown as insets at different scales.</p>
 
 <script>
 (async function(){
-var GEO,DATA,SHAPES,STATES,HUC,DC,DW;
+var GEO,DATA,SHAPES,STATES,HUC,DC,DW,AQL,AQD;
 var BASE=(document.getElementById('wq-root').getAttribute('data-base')||'data/');
-try{var R=await Promise.all(['geo/geo_meta.json','county_water_1985_2015.json','geo/county_shapes.json','geo/state_lines.json','geo/huc8_outlines.json','datacenters/county_datacenter_map.json','datacenters/disclosed_water_map.json'].map(function(u){return fetch(BASE+u).then(function(r){if(!r.ok)throw new Error(u+' '+r.status);return r.json()})}));
-GEO=R[0];DATA=R[1];SHAPES=R[2];STATES=R[3];HUC=R[4];DC=R[5];DW=R[6];}
+try{var R=await Promise.all(['geo/geo_meta.json','county_water_1985_2015.json','geo/county_shapes.json','geo/state_lines.json','geo/huc8_outlines.json','datacenters/county_datacenter_map.json','datacenters/disclosed_water_map.json','geo/aquifer_outlines.json','aquifer_county_map.json'].map(function(u){return fetch(BASE+u).then(function(r){if(!r.ok)throw new Error(u+' '+r.status);return r.json()})}));
+GEO=R[0];DATA=R[1];SHAPES=R[2];STATES=R[3];HUC=R[4];DC=R[5];DW=R[6];AQL=R[7];AQD=R[8];}
 catch(e){document.getElementById('wq-take').textContent='Could not load map data ('+e.message+').';return;}
 var YEARS=DATA.years, D=DATA.data, META=DATA.meta;
 var SECT=[['ps','Public supply'],['dom','Domestic (self-supplied)'],['irr','Irrigation'],['th','Thermoelectric power'],['ind','Industrial'],['min','Mining'],['lv','Livestock and aquaculture']];
@@ -120,7 +122,7 @@ var NAVY=['#EEF1F6','#CBD6E5','#9DB2CE','#6A8BB4','#3B6190','#112F55'];
 var TERRA=['#FBEFE8','#F3D2BF','#E6A98A','#D07A4F','#B24F24','#7A3216'];
 var DIV=['#3B6190','#9DB2CE','#EDEAE3','#E6A98A','#B24F24'];
 var ZERO='#FFFFFF', NODATA='#D8D3C8';
-var S={measure:'total',mode:'level',yi:6,from:3,huc:false,dc:false,dw:false,st:true,noth:false,sel:null};
+var S={measure:'total',mode:'level',yi:6,from:3,huc:false,dc:false,dw:false,aq:false,st:true,noth:false,sel:null};
 var $=function(id){return document.getElementById(id)};
 var NS='http://www.w3.org/2000/svg';
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -191,6 +193,8 @@ var gC=document.createElementNS(NS,'g');gC.setAttribute('stroke','#fff');gC.setA
 var paths={};
 SHAPES.forEach(function(s){var p=document.createElementNS(NS,'path');p.setAttribute('d',s.d);p.setAttribute('data-f',s.id);p.setAttribute('fill',NODATA);gC.appendChild(p);paths[s.id]=p});
 var gH=document.createElementNS(NS,'path');gH.setAttribute('d',HUC);gH.setAttribute('fill','none');gH.setAttribute('stroke','#C05B2E');gH.setAttribute('stroke-width','0.55');gH.setAttribute('stroke-opacity','.85');gH.setAttribute('pointer-events','none');gH.style.display='none';svg.appendChild(gH);
+var gA0=document.createElementNS(NS,'path');gA0.setAttribute('d',AQL);gA0.setAttribute('fill','none');gA0.setAttribute('stroke','#fff');gA0.setAttribute('stroke-width','2.2');gA0.setAttribute('stroke-opacity','.6');gA0.setAttribute('pointer-events','none');gA0.style.display='none';svg.appendChild(gA0);
+var gA=document.createElementNS(NS,'path');gA.setAttribute('d',AQL);gA.setAttribute('fill','none');gA.setAttribute('stroke','#1A1A1A');gA.setAttribute('stroke-width','.9');gA.setAttribute('stroke-dasharray','3 2');gA.setAttribute('stroke-opacity','.9');gA.setAttribute('pointer-events','none');gA.style.display='none';svg.appendChild(gA);
 var gS=document.createElementNS(NS,'path');gS.setAttribute('d',STATES);gS.setAttribute('fill','none');gS.setAttribute('stroke','#1A1A1A');gS.setAttribute('stroke-width','0.7');gS.setAttribute('stroke-opacity','.55');gS.setAttribute('pointer-events','none');svg.appendChild(gS);
 var gSel=document.createElementNS(NS,'path');gSel.setAttribute('fill','none');gSel.setAttribute('stroke','#B24F24');gSel.setAttribute('stroke-width','2');gSel.setAttribute('pointer-events','none');svg.appendChild(gSel);
 var gHov=document.createElementNS(NS,'path');gHov.setAttribute('fill','none');gHov.setAttribute('stroke','#1A1A1A');gHov.setAttribute('stroke-width','1.6');gHov.setAttribute('pointer-events','none');svg.appendChild(gHov);
@@ -250,6 +254,7 @@ function legend(){
   }
   h+='<span class="it"><i class="sw" style="background:'+NODATA+'"></i>No usable data</span>';
   if(S.dc)h+='<span class="it"><i class="sw" style="background:#B24F24;opacity:.6;border-radius:50%"></i>Data center building footprint (circle area; largest county 33 million sq ft)</span><span class="it"><i class="sw" style="background:#fff;border:1px solid #112F55;border-radius:50%"></i>Mapped site, no building footprint</span>';
+  if(S.aq)h+='<span class="it"><svg width="26" height="10" aria-hidden="true"><line x1="0" x2="26" y1="5" y2="5" stroke="#6E6659" stroke-width="1.4" stroke-dasharray="4 3"/></svg>Principal aquifer boundary (shallowest; extents are approximate, overlapping deeper aquifers not shown)</span>';
   if(S.dw){var k=function(w,g){var r=dr(w),s2=2*r+4;return '<span class="it"><svg width="'+s2+'" height="'+s2+'" aria-hidden="true" style="flex:none"><path d="M'+s2/2+','+(s2/2-r)+'L'+(s2/2+r)+','+s2/2+'L'+s2/2+','+(s2/2+r)+'L'+(s2/2-r)+','+s2/2+'Z" fill="'+(g?'#112F55':'#fff')+'" stroke="#112F55" stroke-width="1.4"/>'+(g?'':'<circle cx="'+s2/2+'" cy="'+s2/2+'" r="1.3" fill="#112F55"/>')+'</svg>'+w+'</span>'};
     h+='<span class="t" style="flex-basis:100%;margin-top:6px">Company-disclosed site water (not all operators report)</span>'+'<span class="it">Google, FY2024 withdrawal, Mgal/yr:</span>'+k(100,1)+k(500,1)+k(1500,1)+'<span class="it">Microsoft, FY2025 withdrawal (hollow, center dot):</span>'+k(100,0)+k(500,0)+'<span class="it">Dashed outline: shared site spanning counties, not split</span>'}
   L.innerHTML=h;
@@ -258,6 +263,7 @@ function paint(){
   Object.keys(paths).forEach(function(f){paths[f].setAttribute('fill',colorFor(f))});
   legend();
   gH.style.display=S.huc?'':'none';
+  gA.style.display=S.aq?'':'none';gA0.style.display=S.aq?'':'none';
   gD.style.display=S.dc?'':'none';
   gW.style.display=S.dw?'':'none';$('wq-dwnote').style.display=S.dw?'':'none';$('wq-dwtab').style.display=S.dw?'':'none';
   if(S.dw){$('wq-dwnote').textContent='Diamonds are company disclosures (2024 and 2025) and do not change with the year selected above; county shading is USGS all-sector withdrawals through 2015. Different years and scopes. No diamond means not disclosed, not zero. Company-disclosed site water (Google FY2024, Microsoft FY2025; not comparable, other operators missing) is set against modeled local runoff only, which excludes imported water, groundwater and reservoirs. It is not a measure of water stress or impact.';DW.forEach(function(e,i){dwEls[i].setAttribute('transform','translate('+(e[4]+(S.dc&&!e[10]&&DC[e[3][0]]?5:0))+','+e[5]+')')})}
@@ -343,6 +349,7 @@ function detail(){
     h+='<p class="hint" style="margin-top:8px">Total (shown measure basis): <b>'+fmt(c.total)+' Mgal/d</b>; groundwater share <b>'+(c.total>0?Math.round(100*c.gw/c.total)+'%':'n/a')+'</b>.</p>';
   }
   var dd=DC[f];if(dd){h+='<p class="hint" style="margin-top:8px"><b>Data centers mapped in OpenStreetMap:</b> '+dd[0]+' building'+(dd[0]===1?'':'s')+', '+dd[1]+' campus polygon'+(dd[1]===1?'':'s')+', '+dd[2]+' point'+(dd[2]===1?'':'s')+(dd[3]?'; building footprint '+Math.round(dd[3]).toLocaleString('en-US')+' sq ft':'; no building footprint mapped')+'. Locations and size only. This is not a water measure and the map is incomplete.</p>'}
+  var aqs=AQD[f];if(aqs&&aqs.length){h+='<p class="hint" style="margin-top:8px"><b>Groundwater by principal aquifer, 2015 (fresh, Mgal/d):</b></p><div style="overflow-x:auto"><table><tr><th>Aquifer</th><th>Total</th><th>Public supply</th><th>Irrigation</th></tr>';aqs.slice(0,6).forEach(function(a){h+='<tr><td>'+esc(a[0]||'Unnamed')+'</td><td>'+(a[1]==null?'n/a':fmt(a[1]))+'</td><td>'+(a[2]==null?'n/a':fmt(a[2]))+'</td><td>'+(a[3]==null?'n/a':fmt(a[3]))+'</td></tr>'});h+='</table></div>'+(aqs.length>6?'<p class="hint" style="margin:2px 0">and '+(aqs.length-6)+' more aquifers.</p>':'')+'<p class="hint" style="margin:2px 0">USGS estimates that split county groundwater withdrawals among principal aquifers. Withdrawals, not aquifer storage or recharge; this does not show how much groundwater is available.</p>'}
   var dws=dwRows(f);if(dws.length){h+='<p class="hint" style="margin-top:8px"><b>Company-disclosed site water:</b></p>';dws.forEach(function(e){h+='<p class="hint" style="margin:2px 0">'+esc(e[0])+' '+e[1]+', '+esc(e[2].join(', '))+': withdrawal '+fmtw(e[6])+' Mgal/yr'+(e[7]!=null?', consumption '+fmtw(e[7]):'; consumption not published by site')+'. Share of modeled local runoff'+(e[10]?' (combined supply of the counties it spans; volume not split)':'')+': '+fmtpc(e[8])+' (modeled supply of '+fmt(e[9])+' Mgal/d excludes imports, groundwater and reservoirs; not a stress measure).</p>'});h+='<p class="hint" style="margin:2px 0">Disclosed values are a floor: other operators may not report, and Google and Microsoft figures are not comparable.</p>'}
   var tv=YEARS.map(function(y,i){var cc=calc(f,i);return cc?cc.total:null});
   var gv=YEARS.map(function(y,i){var cc=calc(f,i);return cc&&cc.total>0?100*cc.gw/cc.total:null});
@@ -400,6 +407,7 @@ $('wq-mode').addEventListener('click',function(e){var b=e.target.closest('button
   $('wq-year-l').textContent=S.mode==='change'?'Year (end)':'Year';fillFrom();paint()});
 fromSel.addEventListener('change',function(){S.from=+fromSel.value;paint()});
 $('wq-huc').addEventListener('change',function(e){S.huc=e.target.checked;paint()});
+$('wq-aq').addEventListener('change',function(e){S.aq=e.target.checked;paint()});
 $('wq-dc').addEventListener('change',function(e){S.dc=e.target.checked;paint()});
 $('wq-dw').addEventListener('change',function(e){S.dw=e.target.checked;paint()});
 $('wq-st').addEventListener('change',function(e){S.st=e.target.checked;paint()});
