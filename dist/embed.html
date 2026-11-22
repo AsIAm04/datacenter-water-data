@@ -450,6 +450,8 @@ $('wq-detail').addEventListener('click',function(e){if(e.target.classList&&e.tar
 var SHAPES_BY={};SHAPES.forEach(function(s){SHAPES_BY[s.id]=s.d});
 // ---- events
 var tip=$('wq-tip'),wrap=$('wq-mapwrap');
+// ---- external links rule: any link to another site opens in a new tab
+ROOT0=$('wq-root');ROOT0.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href')||'';if(/^https?:\/\//i.test(h)&&a.hostname!==location.hostname){a.setAttribute('target','_blank');a.setAttribute('rel','noopener noreferrer')}},true);
 // ---- zoom, pan, north arrow
 var ROOT=$('wq-root');if(!ROOT.getAttribute('data-ctl'))ROOT.setAttribute('data-ctl','a');if(!ROOT.getAttribute('data-north'))ROOT.setAttribute('data-north','a');
 var VW=GEO.width,VH=GEO.height,KMAX=60,V={x:0,y:0,w:VW,h:VH},lastZ=null,anim=null,moved=false;

@@ -24,4 +24,11 @@ os.makedirs(os.path.join(ROOT,'dist'),exist_ok=True)
 open(os.path.join(ROOT,'index.html'),'w').write(doc(page(t,True),TITLE))
 open(os.path.join(ROOT,'dist/embed.html'),'w').write(page(t,True,'https://cdn.jsdelivr.net/gh/AsIAm04/datacenter-water-data@main/data/'))
 open(os.path.join(ROOT,'dist/inline.html'),'w').write(doc(page(t,False),TITLE))
+# Rule: every external link (http or https) in a built page must open in a new tab with rel noopener.
+import re
+for f in ('index.html','dist/embed.html','dist/inline.html'):
+    for m in re.finditer(r'<a\b[^>]*>',open(os.path.join(ROOT,f)).read()):
+        tag=m.group(0)
+        if re.search(r'href=["\']https?://',tag) and not ('target="_blank"' in tag and 'noopener' in tag):
+            raise SystemExit('External link without target=_blank and rel=noopener in %s: %s'%(f,tag))
 print('built')
