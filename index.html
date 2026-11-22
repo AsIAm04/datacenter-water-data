@@ -37,7 +37,8 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
 .wq[data-ctl=b] .mctl button{border:0;box-shadow:none;border-radius:999px;background:transparent}
 .wq[data-ctl=c] .mctl button{border-radius:50%;width:38px;height:38px}
 .wq[data-ctl=c] .mctl button.rst{border-radius:999px;height:38px}
-.wq .north{position:absolute;top:10px;left:10px;width:48px;height:58px;pointer-events:none;z-index:3}
+.wq .north{position:absolute;bottom:30px;right:12px;width:48px;height:58px;pointer-events:none;z-index:3}
+.wq .north.off{display:none}
 .wq .north .na,.wq .north .nb,.wq .north .nc{display:none}
 .wq[data-north=a] .north .na,.wq[data-north=b] .north .nb,.wq[data-north=c] .north .nc{display:inline}
 .wq .tip{position:absolute;pointer-events:none;background:#fff;border:1px solid #bdb6a8;border-radius:6px;box-shadow:0 4px 14px rgba(17,47,85,.18);padding:8px 10px;font-size:12.5px;min-width:190px;max-width:260px;z-index:5;display:none}
@@ -109,7 +110,7 @@ font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;c
  </g></svg>
  <div class="tip" id="wq-tip"></div>
 </div>
-<p class="hint" id="wq-zhint" style="margin:6px 4px 0">Zoom with the + and &minus; buttons, or Ctrl or Cmd plus scroll. Drag to pan. Choosing a county zooms to it. The north arrow shows true north at the selected county, or at the center of the view; on this map it tilts up to about 20 degrees from straight up, and the Alaska, Hawaii and Puerto Rico insets are not rotated.</p>
+<p class="hint" id="wq-zhint" style="margin:6px 4px 0">Zoom with the + and &minus; buttons, or Ctrl or Cmd plus scroll. Drag to pan. Choosing a county zooms to it. The north arrow at the bottom right shows true north on the full map and hides when you zoom in. It points straight up, which is true north at the center of the lower 48. In other places true north tilts up to about 20 degrees from straight up. The Alaska, Hawaii and Puerto Rico insets are not rotated.</p>
 <div class="legend" id="wq-legend"></div>
 <p class="hint" id="wq-hmnote" style="display:none;margin:6px 4px 0"></p>
 <details id="wq-hmtab" style="display:none;margin:8px 4px 0"><summary>Table of subbasins with a square on the map (25 Mgal/yr or more)</summary><div style="overflow-x:auto"><table id="wq-hmt"></table></div></details>
@@ -463,7 +464,7 @@ function applyV(v){V=clampV(v);svg.setAttribute('viewBox',V.x.toFixed(2)+' '+V.y
   var k=kOf(),sc=Math.pow(k,-0.8);
   MK.forEach(function(m){m[0].setAttribute('transform','translate('+m[1]+','+m[2]+') scale('+sc.toFixed(4)+')')});
   [].forEach.call(svg.querySelectorAll('.insl'),function(t){t.style.display=k>1.3?'none':''});
-  svg.classList.toggle('zoomed',k>1.01);
+  svg.classList.toggle('zoomed',k>1.01);$('wq-north').classList.toggle('off',k>1.01);
   $('wq-zin').disabled=k>=KMAX-0.01;$('wq-zout').disabled=k<=1.01;$('wq-zrst').disabled=k<=1.01&&!S.sel;
   setNorth()}
 function setView(v){if(anim)cancelAnimationFrame(anim);var t=clampV(v);
